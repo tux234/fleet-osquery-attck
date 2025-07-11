@@ -485,7 +485,8 @@ jobs:
           echo "✅ Changes detected, proceeding with commit..."
           
           # Create commit with error handling
-          COMMIT_MSG="Update MITRE ATT&CK Fleet policies
+          if git commit -m "$(cat <<EOF
+Update MITRE ATT&CK Fleet policies
 
 - Source commit: $LATEST_COMMIT
 - Policies generated: $SUCCESS_COUNT
@@ -494,9 +495,9 @@ jobs:
 
 🤖 Generated with Fleet Policy Automation
 
-Co-Authored-By: GitHub Actions <noreply@github.com>"
-          
-          if git commit -m "$COMMIT_MSG"; then
+Co-Authored-By: GitHub Actions <noreply@github.com>
+EOF
+)"; then
             echo "✅ Commit created successfully"
           else
             echo "❌ Failed to create commit"
