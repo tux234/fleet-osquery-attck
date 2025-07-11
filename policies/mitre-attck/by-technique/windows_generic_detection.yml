@@ -1,0 +1,171 @@
+# MITRE ATT&CK Technique: windows_generic_detection
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/windows_generic_detection.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Local system users. - ATT&CK T1116,T1130
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: certificates
+  observer_can_run: false
+  platform: ""
+  query: select * from certificates;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Users snapshot query - ATT&CK T1116,T1130
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: certificates_snapshot
+  observer_can_run: false
+  platform: ""
+  query: select * from certificates;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Users with an active shell on the system. - ATT&CK T1075,T1097
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: logged_in_users
+  observer_can_run: false
+  platform: ""
+  query: select * from logged_in_users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Local system users.
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: programs
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Local system users.
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: programs_snapshot
+  observer_can_run: false
+  platform: ""
+  query: select * from programs;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: System information for identification.
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: system_info
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM system_info;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: System info snapshot query
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: system_info_snapshot
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM system_info;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: System uptime
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: uptime
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM uptime;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Local system users. - ATT&CK T1136,T1078
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: users
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Users snapshot query - ATT&CK T1136,T1078
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: users_snapshot
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Extracted information from Windows crash logs (Minidumps).
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: windows_crashes
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM windows_crashes;
+  team: ""

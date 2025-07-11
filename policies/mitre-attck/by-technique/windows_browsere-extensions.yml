@@ -1,0 +1,68 @@
+# MITRE ATT&CK Technique: windows_browsere-extensions
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/windows_browsere-extensions.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Lists all chrome extensions - ATT&CK T1176
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: Snapshot_chrome_extensions
+  observer_can_run: false
+  platform: ""
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
+    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Lists all internet explorer extensions - ATT&CK T1176
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: Snapshot_iexplorer_extensions
+  observer_can_run: false
+  platform: ""
+  query: ' select * from  ie_extensions;'
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all chrome extensions - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: chrome_extensions
+  observer_can_run: false
+  platform: ""
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
+    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all internet explorer extensions - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: iexplorer_extensions
+  observer_can_run: false
+  platform: ""
+  query: select * from ie_extensions;
+  team: ""

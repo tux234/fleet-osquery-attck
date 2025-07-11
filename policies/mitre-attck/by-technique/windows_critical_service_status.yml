@@ -1,0 +1,126 @@
+# MITRE ATT&CK Technique: windows_critical_service_status
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/windows_critical_service_status.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Symantec Endpoint Protection service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: ' Sophos_Anti-Virus_Services_1'
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Services query
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: Snapshot_services
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Symantec Endpoint Protection service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Sophos_Anti-Virus_Services_2
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Symantec Endpoint Protection service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Symantec_Endpoint_Protection_Services
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Windows Defender service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Windows_Defender_Services
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Windows Firewall service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Windows_Firewall_Services
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Windows Security Service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Windows_Security_Service
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Windows Update Service Status change - ATT&CK T1089
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Windows_Update_Service
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM services WHERE name = 'wuauserv' AND status != 'RUNNING';
+  team: ""

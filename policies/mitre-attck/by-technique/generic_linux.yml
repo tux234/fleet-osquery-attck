@@ -1,0 +1,99 @@
+# MITRE ATT&CK Technique: generic_linux
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/generic_linux.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check mount on the host - ATT&CK T1025,T1052
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: linux_mounts
+  observer_can_run: false
+  platform: ""
+  query: SELECT device, device_alias, flags, path,type from mounts;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List linux files that are setuid-enabled
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: linux_setuid
+  observer_can_run: false
+  platform: ""
+  query: select * from suid_bin;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Linux sudoers information - ATT&CK T1169,T1206
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: linux_sudoers
+  observer_can_run: false
+  platform: ""
+  query: select * from sudoers;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check any bash reverse shell forwarded to the attacker - ATT&CK T1169,T1206
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: linux_sudoers_sha1
+  observer_can_run: false
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check any bash reverse shell forwarded to the attacker - ATT&CK T1169,T1206
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: linux_sudoers_shell
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE cmdline LIKE '/bin/bash -i >& /dev/tcp/%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check USB device on the host - ATT&CK T1052
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: usb_devices
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM usb_devices;
+  team: ""

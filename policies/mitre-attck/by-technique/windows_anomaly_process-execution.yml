@@ -1,0 +1,547 @@
+# MITRE ATT&CK Technique: windows_anomaly_process-execution
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/windows_anomaly_process-execution.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: InstallUtil Execute, InstallUtil is a command-line utility that allows
+    for installation and uninstallation of resources by executing specific installer
+    components specified in .NET binaries - ATT&CK T1118
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: InstallUtil.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%InstallUtil%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: PsExec Execute, is a free Microsoft tool that can be used to execute
+    a program on another computer. - ATT&CK T1035,S0029
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: PsExec.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%PsExec%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Prefetach File Directory - ATT&CK T1107
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: Snaphost_Prefetch_File
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Schtasks Execute, usaullay used to create a scheduled task - ATT&CK
+    T1053,S0110
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: at.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%at.exe%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Attrib Execute, usaullay used to modify file attributes - ATT&CK T1158
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: attrib.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%attrib%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Bitsadmin Execute, Windows Background Intelligent Transfer Service
+    (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through
+    Component Object Model (COM) - ATT&CK T1197,S0190
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: bitsadmin.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%bitsadmin%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Certutil Execute, Certutil.exe is a legitimate built-in command-line
+    program to manage certificates in Windows - ATT&CK T1105,T1140,T1130,S0160
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: certutil.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%certutil%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Command-Line Interface Execute, CMD execution - ATT&CK T1059
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: cmd.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%CMD%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: CMSTP Execute, The Microsoft Connection Manager Profile Installer (CMSTP.exe)
+    is a command-line program used to install Connection Manager service profiles.
+    - ATT&CK T1191
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: cmstp.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%CMSTP%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Command-Line Interface Execute, Cscript execution starts a script so
+    that it runs in a command-line environment. - ATT&CK T1216
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: cscript.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%cscript%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Esentutl Execute, is a legitimate built-in command-line program it
+    could be used to create a exe from dump raw source.
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: esentutl.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%esentutl%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Mshta Execute, is a utility that executes Microsoft HTML Applications
+    (HTA) - ATT&CK T1170
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: mshta.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%mshta%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: mstsc.exe Execute, usaullay used to perform a RDP Session  - ATT&CK
+    T1076
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: mstsc.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%mstsc%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Net Execute, is used in command-line operations for control of users,
+    groups, services, and network connections - ATT&CK T1126,T1087,T1201,T1069,S0039,T1018,T1007,T1124
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: net.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%net.exe%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Netsh Execute, Netsh.exe (also referred to as Netshell) is a command-line
+    scripting utility used to interact with the network configuration of a system
+    - ATT&CK T1128,T1063,S0108
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: netsh.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%netsh%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Netstat Execute,  is an operating system utility that displays active
+    TCP connections, listening ports, and network statistics. - ATT&CK T1049,S0104
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: netstat.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%netstat%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: POWERSHELL Execute, is a powerful interactive command-line interface
+    and scripting environment included in the Windows operating system - ATT&CK T1086
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: powershell.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%POWERSHELL%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Reg Execute, Reg is a Windows utility used to interact with the Windows
+    Registry.  - ATT&CK T1214,T1012,T1063,S0075
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: reg.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%reg%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Regedit Execute, is a Windows utility used to interact with the Windows
+    Registry. - ATT&CK T1214
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: regedit.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%regedit%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: POWERSHELL Execute, is a powerful interactive command-line interface
+    and scripting environment included in the Windows operating system - ATT&CK T1117
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: regsvr32.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%regsvr%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Runas Execute, Allows a user to run specific tools and programs with
+    different permissions than the user's current logon provides. - ATT&CK T1134
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: runas.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%runas%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: SC.exe Execute, Service Control - Create, Start, Stop, Query or Delete
+    any Windows SERVICE. . - ATT&CK T1007
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: sc.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%sc%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Schtasks Execute, usaullay used to create a scheduled task - ATT&CK
+    T1053,S0111
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: schtasks.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%schtasks%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: SVCHOST Processes not using the -k [name] convention
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: svchost.exe_no_K_option
+  observer_can_run: false
+  platform: windows
+  query: select * from processes where name like 'svchost.exe' and cmdline not like
+    '%-k%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Systeminfo Execute, Systeminfo is a Windows utility that can be used
+    to gather detailed information about a computer. - ATT&CK T1082,S0096
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: systeminfo.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%systeminfo%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: taskeng Execute, usaullay used to create a scheduled task - ATT&CK
+    T1053
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: taskeng.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%taskeng%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: 'Taskkill Execute, usaullay used to kill task '
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: taskkill.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%taskkill%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Tasklist Execute, usaullay used to list task - ATT&CK T1057,T1063,T1007,S0057
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: tasklist.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%tasklist%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: tscon.exe Execute, usaullay used to Terminal Services Console - ATT&CK
+    T1076
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: tscon.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%tscon%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Vssadmin Execute, usaullay used to execute activity on Volume Shadow
+    copy
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: vssadmin.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%vssadmin%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Whoami Execute, used to prints the effective username of the current
+    user
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: whoami.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%whoami%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Xcopy Execute, is used for copying multiple files or entire directory
+    trees from one directory to another and for copying files across a network.
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: xcopy.exe
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%xcopy%';
+  team: ""

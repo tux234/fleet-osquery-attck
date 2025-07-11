@@ -1,0 +1,36 @@
+# MITRE ATT&CK Technique: windows_persistence-startup_items
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/windows_persistence-startup_items.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Windows Startup Items Osquery predefined query - ATT&CK T1060
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: Snaphost_Startup_Items
+  observer_can_run: false
+  platform: ""
+  query: select * from startup_items;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Windows Startup Items Osquery predefined query - ATT&CK T1060
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: Startup_Items
+  observer_can_run: false
+  platform: ""
+  query: select * from startup_items;
+  team: ""

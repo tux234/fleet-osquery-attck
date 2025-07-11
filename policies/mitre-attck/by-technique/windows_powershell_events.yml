@@ -1,0 +1,22 @@
+# MITRE ATT&CK Technique: windows_powershell_events
+# Generated: 2025-07-11 05:18:39 UTC
+# Source: https://github.com/teoseller/osquery-attck
+# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
+# Usage: fleetctl apply -f by-technique/windows_powershell_events.yml
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Powershell script blocks reconstructed to their full script content,
+    this table requires script block logging to be enabled. - ATT&CK T1086,T1064
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: powershell_events_script_blocks
+  observer_can_run: false
+  platform: ""
+  query: select * from powershell_events;
+  team: ""
