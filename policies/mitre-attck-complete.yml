@@ -8,7 +8,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Check mount on the host
   observer_can_run: false
   platform: "linux"
   query: SELECT device, device_alias, flags, path,type from mounts;
@@ -23,7 +23,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - List linux files that are setuid-enabled
   observer_can_run: false
   platform: "linux"
   query: select * from suid_bin;
@@ -38,7 +38,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Linux sudoers information
   observer_can_run: false
   platform: "linux"
   query: select * from sudoers;
@@ -53,7 +53,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Check any bash reverse shell forwarded to the attacker
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
@@ -68,7 +68,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Check any bash reverse shell forwarded to the attacker
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM processes WHERE cmdline LIKE '/bin/bash -i >& /dev/tcp/%';
@@ -98,7 +98,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Opera extensions
+  name: MITRE - Lists all chrome extensions
   observer_can_run: false
   platform: "linux"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
@@ -113,7 +113,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Opera extensions
+  name: MITRE - Lists all Firefox addons
   observer_can_run: false
   platform: "linux"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
@@ -158,7 +158,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists hidden file in relevant path
+  name: MITRE - Lists hidden direcotry in relevant path
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path like '/root/.%')) AND type='directory';
@@ -218,7 +218,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check Returns possible Reverse Shells on system processes
+  name: MITRE - Returns the Listening port List
   observer_can_run: false
   platform: "linux"
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
@@ -233,7 +233,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check Returns possible Reverse Shells on system processes
+  name: MITRE - Returns the network connections from system processes
   observer_can_run: false
   platform: "linux"
   query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
@@ -263,7 +263,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under YOURIMPDIR1 dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR1/%/%') OR (fi.path like '/YOURIMPDIR1/%%/.%') OR (fi.path like '/YOURIMPDIR1/.%') OR (fi.path like '/YOURIMPDIR1/%'));
@@ -278,7 +278,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under YOURIMPDIR2 dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR2/%/%') OR (fi.path like '/YOURIMPDIR2/%%/.%') OR (fi.path like '/YOURIMPDIR2/.%') OR (fi.path like '/YOURIMPDIR2/%'));
@@ -293,7 +293,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under YOURIMPDIRn dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIRn/%/%') OR (fi.path like '/YOURIMPDIRn/%%/.%') OR (fi.path like '/YOURIMPDIRn/.%') OR (fi.path like '/YOURIMPDIRn/%'));
@@ -308,7 +308,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under all home user dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%/%') OR (fi.path like '/home/%') OR (fi.path like '/home/%/.%')OR (fi.path like '/home/.%'));
@@ -323,7 +323,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under root dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/root/%/%') OR (fi.path like '/root/%') OR (fi.path like '/root/%/.%')OR (fi.path like '/root/.%'));
@@ -338,7 +338,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under tmp dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/tmp/%/%') OR (fi.path like '/tmp/.%')OR (fi.path like '/tmp/%'));
@@ -383,7 +383,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all create and deleted account
+  name: MITRE - Lists last logged in users
   observer_can_run: false
   platform: "linux"
   query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
@@ -398,7 +398,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all create and deleted account
+  name: MITRE - Lists all logged in users
   observer_can_run: false
   platform: "linux"
   query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type from logged_in_users;
@@ -428,7 +428,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Returns the Listening port List
   observer_can_run: false
   platform: windows
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
@@ -458,7 +458,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Returns the Listening port List
   observer_can_run: false
   platform: windows
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
@@ -488,7 +488,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - InstallUtil Execute, InstallUtil is a command-line utility that allows for installation and uninstallation of resources by executing specific installer components specified in .NET binaries
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%InstallUtil%';
@@ -503,7 +503,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - PsExec Execute, is a free Microsoft tool that can be used to execute a program on another computer.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%PsExec%';
@@ -518,7 +518,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Snapshot Prefetach File Directory
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
@@ -533,7 +533,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Schtasks Execute, usaullay used to create a scheduled task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%at.exe%';
@@ -548,7 +548,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Attrib Execute, usaullay used to modify file attributes
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%attrib%';
@@ -563,7 +563,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Bitsadmin Execute, Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through Component Object Model (COM)
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%bitsadmin%';
@@ -578,7 +578,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Certutil Execute, Certutil.exe is a legitimate built-in command-line program to manage certificates in Windows
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%certutil%';
@@ -593,7 +593,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Command-Line Interface Execute, CMD execution
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMD%';
@@ -608,7 +608,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - CMSTP Execute, The Microsoft Connection Manager Profile Installer (CMSTP.exe) is a command-line program used to install Connection Manager service profiles.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMSTP%';
@@ -623,7 +623,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Command-Line Interface Execute, Cscript execution starts a script so that it runs in a command-line environment.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%cscript%';
@@ -638,7 +638,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Esentutl Execute, is a legitimate built-in command-line program it could be used to create a exe from dump raw source.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%esentutl%';
@@ -653,7 +653,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Mshta Execute, is a utility that executes Microsoft HTML Applications (HTA)
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mshta%';
@@ -668,7 +668,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: 'MITRE - mstsc.exe Execute, usaullay used to perform a RDP Session '
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mstsc%';
@@ -683,7 +683,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Net Execute, is used in command-line operations for control of users, groups, services, and network connections
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%net.exe%';
@@ -698,7 +698,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Netsh Execute, Netsh.exe (also referred to as Netshell) is a command-line scripting utility used to interact with the network configuration of a system
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%netsh%';
@@ -713,7 +713,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Netstat Execute,  is an operating system utility that displays active TCP connections, listening ports, and network statistics.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%netstat%';
@@ -728,7 +728,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%POWERSHELL%';
@@ -743,7 +743,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: 'MITRE - Reg Execute, Reg is a Windows utility used to interact with the Windows Registry. '
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%reg%';
@@ -758,7 +758,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Regedit Execute, is a Windows utility used to interact with the Windows Registry.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%regedit%';
@@ -773,7 +773,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%regsvr%';
@@ -788,7 +788,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Runas Execute, Allows a user to run specific tools and programs with different permissions than the user's current logon provides.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%runas%';
@@ -803,7 +803,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - SC.exe Execute, Service Control - Create, Start, Stop, Query or Delete any Windows SERVICE. .
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%sc%';
@@ -818,7 +818,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Schtasks Execute, usaullay used to create a scheduled task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%schtasks%';
@@ -833,7 +833,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - SVCHOST Processes not using the -k [name] convention
   observer_can_run: false
   platform: windows
   query: select * from processes where name like 'svchost.exe' and cmdline not like '%-k%';
@@ -848,7 +848,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Systeminfo Execute, Systeminfo is a Windows utility that can be used to gather detailed information about a computer.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%systeminfo%';
@@ -863,7 +863,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - taskeng Execute, usaullay used to create a scheduled task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskeng%';
@@ -878,7 +878,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: 'MITRE - Taskkill Execute, usaullay used to kill task '
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskkill%';
@@ -893,7 +893,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Tasklist Execute, usaullay used to list task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%tasklist%';
@@ -908,7 +908,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - tscon.exe Execute, usaullay used to Terminal Services Console
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%tscon%';
@@ -923,7 +923,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Vssadmin Execute, usaullay used to execute activity on Volume Shadow copy
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%vssadmin%';
@@ -938,7 +938,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Whoami Execute, used to prints the effective username of the current user
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%whoami%';
@@ -968,7 +968,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all internet explorer extensions
+  name: MITRE - Snapshot Lists all chrome extensions
   observer_can_run: false
   platform: "windows"
   query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
@@ -983,7 +983,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all internet explorer extensions
+  name: MITRE - Snapshot Lists all internet explorer extensions
   observer_can_run: false
   platform: "windows"
   query: ' select * from  ie_extensions;'
@@ -998,7 +998,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all internet explorer extensions
+  name: MITRE - Lists all chrome extensions
   observer_can_run: false
   platform: "windows"
   query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
@@ -1028,7 +1028,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - Windows Update Service Status change'
+  name: 'MITRE - Symantec Endpoint Protection service Status change'
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
@@ -1043,7 +1043,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Snapshot Services query
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services;
@@ -1058,7 +1058,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Symantec Endpoint Protection service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
@@ -1073,7 +1073,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Symantec Endpoint Protection service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
@@ -1088,7 +1088,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Defender service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
@@ -1103,7 +1103,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Firewall service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
@@ -1118,7 +1118,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Security Service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';
@@ -1148,7 +1148,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Local system users.
   observer_can_run: false
   platform: "linux"
   query: select * from certificates;
@@ -1163,7 +1163,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Users snapshot query
   observer_can_run: false
   platform: "linux"
   query: select * from certificates;
@@ -1178,7 +1178,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Users with an active shell on the system.
   observer_can_run: false
   platform: "linux"
   query: select * from logged_in_users;
@@ -1193,7 +1193,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Local system users.
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM users;
@@ -1208,7 +1208,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Local system users.
   observer_can_run: false
   platform: "linux"
   query: select * from programs;
@@ -1223,7 +1223,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - System information for identification.
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM system_info;
@@ -1238,7 +1238,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - System info snapshot query
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM system_info;
@@ -1253,7 +1253,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - System uptime
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM uptime;
@@ -1268,7 +1268,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Local system users.
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM users;
@@ -1283,7 +1283,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Users snapshot query
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM users;
@@ -1313,7 +1313,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under AppData\Local
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Local\%' AND f.type='directory';
@@ -1328,7 +1328,7 @@ spec:
   interval: 1880
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under %TEMP% or AppData\Local\Temp
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\local\temp\%' AND f.type='directory';
@@ -1343,7 +1343,7 @@ spec:
   interval: 1840
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under %APPDATA% or %\AppData\Roaming
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\%' AND f.type='directory';
@@ -1358,7 +1358,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
@@ -1373,7 +1373,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND f.type='directory';
@@ -1388,7 +1388,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND f.type='directory';
@@ -1403,7 +1403,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
@@ -1418,7 +1418,7 @@ spec:
   interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under c:\windows
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\Windows\%' AND f.type='directory';
@@ -1448,7 +1448,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under AppData\Local
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\%' and type='regular';
@@ -1463,7 +1463,7 @@ spec:
   interval: 1900
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under %TEMP% or AppData\Local\Temp
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\temp\%' and type='regular';
@@ -1478,7 +1478,7 @@ spec:
   interval: 1840
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under %APPDATA% or %\AppData\Roaming
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\%' and type='regular';
@@ -1493,7 +1493,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND type='regular';
@@ -1508,7 +1508,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND type='regular';
@@ -1523,7 +1523,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND type='regular';
@@ -1538,7 +1538,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND type='regular';
@@ -1553,7 +1553,7 @@ spec:
   interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under c:\windows
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\Windows\%' and type='regular';
@@ -1583,7 +1583,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Startup Items Osquery predefined query
+  name: MITRE - Snapshot Windows Startup Items Osquery predefined query
   observer_can_run: false
   platform: "windows"
   query: select * from startup_items;
@@ -1673,7 +1673,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Services query
+  name: MITRE - Lists all installed services configured to start automatically at boot
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';
@@ -1703,7 +1703,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Windows System running processes.
+  name: MITRE - Snapshot List Windows System running processes
   observer_can_run: false
   platform: "windows"
   query: select processes.pid, processes.name, users.username, processes.path from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
@@ -2063,7 +2063,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Control Panel_Desktop
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control Panel\Desktop';
@@ -2078,7 +2078,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon';
@@ -2093,7 +2093,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -2108,7 +2108,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKEY_CURRENT_USER_Environment
   observer_can_run: false
   platform: "windows"
   query: select * from registry where key='HKEY_CURRENT_USER\Environment';
@@ -2123,7 +2123,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
@@ -2138,7 +2138,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon';
@@ -2153,7 +2153,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -2168,7 +2168,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Image_File_Execution_Options
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options';
@@ -2183,7 +2183,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
   observer_can_run: false
   platform: windows
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
@@ -2198,7 +2198,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon';
@@ -2213,7 +2213,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
@@ -2228,7 +2228,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
@@ -2243,7 +2243,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
@@ -2258,7 +2258,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
@@ -2273,7 +2273,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Netsh';
@@ -2288,7 +2288,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
   observer_can_run: false
   platform: "windows"
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
@@ -2318,7 +2318,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -2333,7 +2333,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
@@ -2348,7 +2348,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -2363,7 +2363,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
@@ -2378,7 +2378,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
@@ -2393,7 +2393,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
@@ -2408,7 +2408,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
   observer_can_run: false
   platform: "windows"
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
@@ -2423,7 +2423,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';

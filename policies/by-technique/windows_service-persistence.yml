@@ -8,7 +8,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Services query
+  name: MITRE - Lists all installed services configured to start automatically at boot
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';

@@ -8,7 +8,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - Windows Update Service Status change'
+  name: 'MITRE - Symantec Endpoint Protection service Status change'
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
@@ -23,7 +23,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Snapshot Services query
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services;
@@ -38,7 +38,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Symantec Endpoint Protection service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
@@ -53,7 +53,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Symantec Endpoint Protection service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
@@ -68,7 +68,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Defender service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
@@ -83,7 +83,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Firewall service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
@@ -98,7 +98,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Security Service Status change
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';

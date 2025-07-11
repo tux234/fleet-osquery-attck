@@ -8,7 +8,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under AppData\Local
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\%' and type='regular';
@@ -23,7 +23,7 @@ spec:
   interval: 1900
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under %TEMP% or AppData\Local\Temp
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\temp\%' and type='regular';
@@ -38,7 +38,7 @@ spec:
   interval: 1840
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under %APPDATA% or %\AppData\Roaming
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\%' and type='regular';
@@ -53,7 +53,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND type='regular';
@@ -68,7 +68,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND type='regular';
@@ -83,7 +83,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND type='regular';
@@ -98,7 +98,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND type='regular';
@@ -113,7 +113,7 @@ spec:
   interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Check suspicious file creation under c:\windows
   observer_can_run: false
   platform: windows
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\Windows\%' and type='regular';

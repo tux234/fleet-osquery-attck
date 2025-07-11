@@ -8,7 +8,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under AppData\Local
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Local\%' AND f.type='directory';
@@ -23,7 +23,7 @@ spec:
   interval: 1880
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under %TEMP% or AppData\Local\Temp
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\local\temp\%' AND f.type='directory';
@@ -38,7 +38,7 @@ spec:
   interval: 1840
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under %APPDATA% or %\AppData\Roaming
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\%' AND f.type='directory';
@@ -53,7 +53,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
@@ -68,7 +68,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND f.type='directory';
@@ -83,7 +83,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND f.type='directory';
@@ -98,7 +98,7 @@ spec:
   interval: 1860
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu\Programs
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
@@ -113,7 +113,7 @@ spec:
   interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Check suspicious directory creation under c:\windows
   observer_can_run: false
   platform: windows
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\Windows\%' AND f.type='directory';

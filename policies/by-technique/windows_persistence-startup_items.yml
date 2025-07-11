@@ -8,7 +8,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Startup Items Osquery predefined query
+  name: MITRE - Snapshot Windows Startup Items Osquery predefined query
   observer_can_run: false
   platform: "windows"
   query: select * from startup_items;

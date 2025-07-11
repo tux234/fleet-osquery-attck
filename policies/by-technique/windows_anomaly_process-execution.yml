@@ -8,7 +8,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - InstallUtil Execute, InstallUtil is a command-line utility that allows for installation and uninstallation of resources by executing specific installer components specified in .NET binaries
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%InstallUtil%';
@@ -23,7 +23,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - PsExec Execute, is a free Microsoft tool that can be used to execute a program on another computer.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%PsExec%';
@@ -38,7 +38,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Snapshot Prefetach File Directory
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
@@ -53,7 +53,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Schtasks Execute, usaullay used to create a scheduled task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%at.exe%';
@@ -68,7 +68,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Attrib Execute, usaullay used to modify file attributes
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%attrib%';
@@ -83,7 +83,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Bitsadmin Execute, Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through Component Object Model (COM)
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%bitsadmin%';
@@ -98,7 +98,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Certutil Execute, Certutil.exe is a legitimate built-in command-line program to manage certificates in Windows
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%certutil%';
@@ -113,7 +113,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Command-Line Interface Execute, CMD execution
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMD%';
@@ -128,7 +128,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - CMSTP Execute, The Microsoft Connection Manager Profile Installer (CMSTP.exe) is a command-line program used to install Connection Manager service profiles.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMSTP%';
@@ -143,7 +143,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Command-Line Interface Execute, Cscript execution starts a script so that it runs in a command-line environment.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%cscript%';
@@ -158,7 +158,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Esentutl Execute, is a legitimate built-in command-line program it could be used to create a exe from dump raw source.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%esentutl%';
@@ -173,7 +173,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Mshta Execute, is a utility that executes Microsoft HTML Applications (HTA)
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mshta%';
@@ -188,7 +188,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: 'MITRE - mstsc.exe Execute, usaullay used to perform a RDP Session '
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mstsc%';
@@ -203,7 +203,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Net Execute, is used in command-line operations for control of users, groups, services, and network connections
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%net.exe%';
@@ -218,7 +218,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Netsh Execute, Netsh.exe (also referred to as Netshell) is a command-line scripting utility used to interact with the network configuration of a system
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%netsh%';
@@ -233,7 +233,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Netstat Execute,  is an operating system utility that displays active TCP connections, listening ports, and network statistics.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%netstat%';
@@ -248,7 +248,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%POWERSHELL%';
@@ -263,7 +263,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: 'MITRE - Reg Execute, Reg is a Windows utility used to interact with the Windows Registry. '
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%reg%';
@@ -278,7 +278,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Regedit Execute, is a Windows utility used to interact with the Windows Registry.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%regedit%';
@@ -293,7 +293,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%regsvr%';
@@ -308,7 +308,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Runas Execute, Allows a user to run specific tools and programs with different permissions than the user's current logon provides.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%runas%';
@@ -323,7 +323,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - SC.exe Execute, Service Control - Create, Start, Stop, Query or Delete any Windows SERVICE. .
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%sc%';
@@ -338,7 +338,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Schtasks Execute, usaullay used to create a scheduled task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%schtasks%';
@@ -353,7 +353,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - SVCHOST Processes not using the -k [name] convention
   observer_can_run: false
   platform: windows
   query: select * from processes where name like 'svchost.exe' and cmdline not like '%-k%';
@@ -368,7 +368,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Systeminfo Execute, Systeminfo is a Windows utility that can be used to gather detailed information about a computer.
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%systeminfo%';
@@ -383,7 +383,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - taskeng Execute, usaullay used to create a scheduled task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskeng%';
@@ -398,7 +398,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: 'MITRE - Taskkill Execute, usaullay used to kill task '
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskkill%';
@@ -413,7 +413,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Tasklist Execute, usaullay used to list task
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%tasklist%';
@@ -428,7 +428,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - tscon.exe Execute, usaullay used to Terminal Services Console
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%tscon%';
@@ -443,7 +443,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Vssadmin Execute, usaullay used to execute activity on Volume Shadow copy
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%vssadmin%';
@@ -458,7 +458,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - Whoami Execute, used to prints the effective username of the current user
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%whoami%';

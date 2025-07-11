@@ -38,7 +38,7 @@ policies/
 ## Policy Information
 
 - **Total Policies**: 26 successfully converted
-- **Last Updated**: 2025-07-11 19:21:42 UTC
+- **Last Updated**: 2025-07-11 19:28:33 UTC
 - **Source Commit**: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
 - **Update Schedule**: Weekly (Mondays at 2 AM UTC)
 

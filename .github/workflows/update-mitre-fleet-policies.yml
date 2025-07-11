@@ -222,13 +222,13 @@ jobs:
             
             yq_exit_code=0
             if [ -n "$platform" ]; then
-                yq eval-all '
+                yq eval '
                     select(.kind == "query") |
                     .spec.name = ("MITRE - " + ((.spec.description // "") | split(" - ATT&CK")[0] | split(" - ATTACK")[0])) |
                     .spec.platform = "'"$platform"'"
                 ' "$yml_file" > "$temp_improved" 2>/dev/null || yq_exit_code=$?
             else
-                yq eval-all '
+                yq eval '
                     select(.kind == "query") |
                     .spec.name = ("MITRE - " + ((.spec.description // "") | split(" - ATT&CK")[0] | split(" - ATTACK")[0]))
                 ' "$yml_file" > "$temp_improved" 2>/dev/null || yq_exit_code=$?

@@ -8,7 +8,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Control Panel_Desktop
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control Panel\Desktop';
@@ -23,7 +23,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon';
@@ -38,7 +38,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -53,7 +53,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKEY_CURRENT_USER_Environment
   observer_can_run: false
   platform: "windows"
   query: select * from registry where key='HKEY_CURRENT_USER\Environment';
@@ -68,7 +68,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
@@ -83,7 +83,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon';
@@ -98,7 +98,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -113,7 +113,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Image_File_Execution_Options
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options';
@@ -128,7 +128,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
   observer_can_run: false
   platform: windows
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
@@ -143,7 +143,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon';
@@ -158,7 +158,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
@@ -173,7 +173,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
@@ -188,7 +188,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
@@ -203,7 +203,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
@@ -218,7 +218,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Netsh';
@@ -233,7 +233,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
   observer_can_run: false
   platform: "windows"
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
@@ -263,7 +263,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -278,7 +278,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
@@ -293,7 +293,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
@@ -308,7 +308,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
@@ -323,7 +323,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
@@ -338,7 +338,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
@@ -353,7 +353,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
   observer_can_run: false
   platform: "windows"
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
@@ -368,7 +368,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';

@@ -8,7 +8,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all create and deleted account
+  name: MITRE - Lists last logged in users
   observer_can_run: false
   platform: "linux"
   query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
@@ -23,7 +23,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all create and deleted account
+  name: MITRE - Lists all logged in users
   observer_can_run: false
   platform: "linux"
   query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type from logged_in_users;

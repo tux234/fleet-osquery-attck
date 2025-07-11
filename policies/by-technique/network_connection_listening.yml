@@ -8,7 +8,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Returns the Listening port List
   observer_can_run: false
   platform: windows
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
@@ -38,7 +38,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Returns the Listening port List
   observer_can_run: false
   platform: windows
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';

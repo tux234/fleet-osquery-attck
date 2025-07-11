@@ -8,7 +8,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Check mount on the host
   observer_can_run: false
   platform: "linux"
   query: SELECT device, device_alias, flags, path,type from mounts;
@@ -23,7 +23,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - List linux files that are setuid-enabled
   observer_can_run: false
   platform: "linux"
   query: select * from suid_bin;
@@ -38,7 +38,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Linux sudoers information
   observer_can_run: false
   platform: "linux"
   query: select * from sudoers;
@@ -53,7 +53,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Check any bash reverse shell forwarded to the attacker
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
@@ -68,7 +68,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - Check any bash reverse shell forwarded to the attacker
   observer_can_run: false
   platform: "linux"
   query: SELECT * FROM processes WHERE cmdline LIKE '/bin/bash -i >& /dev/tcp/%';

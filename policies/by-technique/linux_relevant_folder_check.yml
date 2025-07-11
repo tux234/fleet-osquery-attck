@@ -8,7 +8,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under YOURIMPDIR1 dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR1/%/%') OR (fi.path like '/YOURIMPDIR1/%%/.%') OR (fi.path like '/YOURIMPDIR1/.%') OR (fi.path like '/YOURIMPDIR1/%'));
@@ -23,7 +23,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under YOURIMPDIR2 dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR2/%/%') OR (fi.path like '/YOURIMPDIR2/%%/.%') OR (fi.path like '/YOURIMPDIR2/.%') OR (fi.path like '/YOURIMPDIR2/%'));
@@ -38,7 +38,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under YOURIMPDIRn dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIRn/%/%') OR (fi.path like '/YOURIMPDIRn/%%/.%') OR (fi.path like '/YOURIMPDIRn/.%') OR (fi.path like '/YOURIMPDIRn/%'));
@@ -53,7 +53,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under all home user dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%/%') OR (fi.path like '/home/%') OR (fi.path like '/home/%/.%')OR (fi.path like '/home/.%'));
@@ -68,7 +68,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under root dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/root/%/%') OR (fi.path like '/root/%') OR (fi.path like '/root/%/.%')OR (fi.path like '/root/.%'));
@@ -83,7 +83,7 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Lists files and directories under tmp dir
   observer_can_run: false
   platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/tmp/%/%') OR (fi.path like '/tmp/.%')OR (fi.path like '/tmp/%'));

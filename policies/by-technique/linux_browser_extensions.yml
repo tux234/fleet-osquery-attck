@@ -8,7 +8,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Opera extensions
+  name: MITRE - Lists all chrome extensions
   observer_can_run: false
   platform: "linux"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
@@ -23,7 +23,7 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Opera extensions
+  name: MITRE - Lists all Firefox addons
   observer_can_run: false
   platform: "linux"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);

@@ -8,7 +8,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Windows System running processes.
+  name: MITRE - Snapshot List Windows System running processes
   observer_can_run: false
   platform: "windows"
   query: select processes.pid, processes.name, users.username, processes.path from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
