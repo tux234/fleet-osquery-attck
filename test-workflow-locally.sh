@@ -76,14 +76,22 @@ main() {
     # Step 2: Environment setup
     print_step "Setting up environment..."
     
-    # Install fleetctl
-    print_step "Installing Fleet CLI..."
-    if npm install -g fleetctl >/dev/null 2>&1; then
+    # Check if fleetctl is already installed
+    print_step "Setting up Fleet CLI..."
+    if command -v fleetctl >/dev/null 2>&1; then
         FLEETCTL_VERSION=$(fleetctl --version 2>/dev/null || echo "unknown")
-        print_success "Fleet CLI installed: $FLEETCTL_VERSION"
+        print_success "Fleet CLI already installed: $FLEETCTL_VERSION"
     else
-        print_error "Failed to install Fleet CLI"
-        exit 1
+        print_step "Installing Fleet CLI..."
+        if npm install -g fleetctl >/dev/null 2>&1; then
+            FLEETCTL_VERSION=$(fleetctl --version 2>/dev/null || echo "unknown")
+            print_success "Fleet CLI installed: $FLEETCTL_VERSION"
+        else
+            print_error "Failed to install Fleet CLI"
+            print_error "Please install Fleet CLI manually:"
+            print_error "  npm install -g fleetctl"
+            exit 1
+        fi
     fi
     
     echo
