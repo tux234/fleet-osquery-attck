@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect Processes running without a binary on disk
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect Processes running without a binary on disk
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name, path, pid FROM processes WHERE on_disk = 0;
+  team: ""

@@ -1,0 +1,165 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1173,T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1173,T1086,T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Detect processes masquerading as legitimate Windows processes
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe');
+  team: ""

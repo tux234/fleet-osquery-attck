@@ -1,9 +1,3 @@
-# MITRE ATT&CK Technique: linux_users_check
-# Generated: 2025-07-11 05:18:39 UTC
-# Source: https://github.com/teoseller/osquery-attck
-# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
-# Usage: fleetctl apply -f by-technique/linux_users_check.yml
-
 ---
 apiVersion: v1
 kind: query
@@ -14,11 +8,10 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: linux_last_logged_users
+  name: MITRE - Lists all create and deleted account
   observer_can_run: false
-  platform: ""
-  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type
-    from last;
+  platform: "linux"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
   team: ""
 ---
 apiVersion: v1
@@ -30,11 +23,10 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: linux_logged_users
+  name: MITRE - Lists all create and deleted account
   observer_can_run: false
-  platform: ""
-  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
-    from logged_in_users;
+  platform: "linux"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type from logged_in_users;
   team: ""
 ---
 apiVersion: v1
@@ -46,8 +38,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: linux_users
+  name: MITRE - Lists all create and deleted account
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: select * from users;
   team: ""

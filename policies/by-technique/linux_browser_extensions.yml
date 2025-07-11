@@ -1,9 +1,3 @@
-# MITRE ATT&CK Technique: linux_browser_extensions
-# Generated: 2025-07-11 05:18:39 UTC
-# Source: https://github.com/teoseller/osquery-attck
-# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
-# Usage: fleetctl apply -f by-technique/linux_browser_extensions.yml
-
 ---
 apiVersion: v1
 kind: query
@@ -14,11 +8,10 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: chrome_extensions
+  name: MITRE - Lists all Opera extensions
   observer_can_run: false
-  platform: ""
-  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING
-    (uid);
+  platform: "linux"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
   team: ""
 ---
 apiVersion: v1
@@ -30,9 +23,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: firefox_addons
+  name: MITRE - Lists all Opera extensions
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
   team: ""
 ---
@@ -45,9 +38,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: opera_extensions
+  name: MITRE - Lists all Opera extensions
   observer_can_run: false
-  platform: ""
-  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING
-    (uid);
+  platform: "linux"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING (uid);
   team: ""

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Powershell script blocks reconstructed to their full script content, this table requires script block logging to be enabled. - ATT&CK T1086,T1064
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Powershell script blocks reconstructed to their full script content, this table requires script block logging to be enabled.
+  observer_can_run: false
+  platform: "windows"
+  query: select * from powershell_events;
+  team: ""

@@ -15,8 +15,8 @@ NC='\033[0m' # No Color
 # Environment variables (matching workflow)
 UPSTREAM_REPO='https://github.com/teoseller/osquery-attck.git'
 COMMIT_TRACKING_FILE='.last_osquery_commit'
-POLICIES_DIR='policies/mitre-attck'
-TECHNIQUES_DIR='policies/mitre-attck/by-technique'
+POLICIES_DIR='policies'
+TECHNIQUES_DIR='policies/by-technique'
 
 # Helper functions
 print_step() {
@@ -191,30 +191,103 @@ main() {
     
     echo
     
+    # Step 5.5: Improve query names and platform targeting
+    print_step "Improving query names and platform targeting..."
+    
+    # Install yq if not available
+    YQ_AVAILABLE=true
+    if ! command -v yq >/dev/null 2>&1; then
+        print_warning "yq not found, trying to install..."
+        if command -v brew >/dev/null 2>&1; then
+            if ! brew install yq >/dev/null 2>&1; then
+                print_warning "Failed to install yq, will use fallback method"
+                YQ_AVAILABLE=false
+            fi
+        else
+            print_warning "yq not available and brew not found, will use fallback method"
+            YQ_AVAILABLE=false
+        fi
+    fi
+    
+    # Process each converted YAML file to improve names and platforms
+    for yml_file in temp_yml_files/*.yml; do
+        if [ -f "$yml_file" ]; then
+            filename=$(basename "$yml_file" .yml)
+            printf "  Improving: %-40s " "$filename"
+            
+            # Determine platform based on filename
+            platform=""
+            if [[ "$filename" =~ ^linux ]] || [[ "$filename" =~ generic ]]; then
+                platform="linux"
+            elif [[ "$filename" =~ ^windows ]]; then
+                platform="windows"
+            else
+                platform=""
+            fi
+            
+            if [ "$YQ_AVAILABLE" = true ]; then
+                # Use yq to improve query names and set platform
+                temp_improved="${yml_file}.improved"
+                yq_exit_code=0
+                
+                if [ -n "$platform" ]; then
+                    yq eval-all '
+                        select(.kind == "query") |
+                        .spec.name = ("MITRE - " + ((.spec.description // "") | split(" - ATT&CK")[0] | split(" - ATTACK")[0])) |
+                        .spec.platform = "'"$platform"'"
+                    ' "$yml_file" > "$temp_improved" 2>/dev/null || yq_exit_code=$?
+                else
+                    yq eval-all '
+                        select(.kind == "query") |
+                        .spec.name = ("MITRE - " + ((.spec.description // "") | split(" - ATT&CK")[0] | split(" - ATTACK")[0]))
+                    ' "$yml_file" > "$temp_improved" 2>/dev/null || yq_exit_code=$?
+                fi
+                
+                if [ $yq_exit_code -eq 0 ] && [ -s "$temp_improved" ] && grep -q "kind: query" "$temp_improved"; then
+                    mv "$temp_improved" "$yml_file"
+                    echo -e "${GREEN}✓${NC}"
+                else
+                    rm -f "$temp_improved"
+                    if [ -n "$platform" ]; then
+                        sed -i.bak "s/^  platform: .*/  platform: $platform/" "$yml_file" 2>/dev/null
+                        rm -f "${yml_file}.bak"
+                    fi
+                    echo -e "${YELLOW}~${NC}"
+                fi
+            else
+                # Fallback: only set platform when yq is unavailable
+                if [ -n "$platform" ]; then
+                    sed -i.bak "s/^  platform: .*/  platform: $platform/" "$yml_file" 2>/dev/null
+                    rm -f "${yml_file}.bak"
+                fi
+                echo -e "${YELLOW}~${NC}"
+            fi
+        fi
+    done
+    
+    print_success "Query improvement completed"
+    
+    echo
+    
     # Step 6: Generate policy files
     print_step "Generating policy files..."
     
     # Create directories
     mkdir -p $POLICIES_DIR $TECHNIQUES_DIR
     
-    # Generate complete policy file with header
-    cat > $POLICIES_DIR/mitre-attck-complete.yml << EOF
-# MITRE ATT&CK Framework Fleet Policies - Complete Collection
-# Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-# Source: https://github.com/teoseller/osquery-attck
-# Commit: $LATEST_COMMIT
-# Policies: $SUCCESS_COUNT successful conversions
-# Usage: fleetctl apply -f mitre-attck-complete.yml
----
-EOF
+    # Generate complete policy file combining all individual files
+    > $POLICIES_DIR/mitre-attck-complete.yml
     
-    # Combine all converted files
+    FIRST_FILE=true
     for yml_file in temp_yml_files/*.yml; do
         if [ -f "$yml_file" ]; then
-            filename=$(basename "$yml_file" .yml)
-            echo "# Source: $filename.conf" >> $POLICIES_DIR/mitre-attck-complete.yml
-            cat "$yml_file" >> $POLICIES_DIR/mitre-attck-complete.yml
-            echo "---" >> $POLICIES_DIR/mitre-attck-complete.yml
+            if [ "$FIRST_FILE" = true ]; then
+                FIRST_FILE=false
+                cat "$yml_file" >> $POLICIES_DIR/mitre-attck-complete.yml
+            else
+                echo "---" >> $POLICIES_DIR/mitre-attck-complete.yml
+                tail -n +2 "$yml_file" >> $POLICIES_DIR/mitre-attck-complete.yml
+            fi
         fi
     done
     
@@ -225,17 +298,7 @@ EOF
     for yml_file in temp_yml_files/*.yml; do
         if [ -f "$yml_file" ]; then
             filename=$(basename "$yml_file" .yml)
-            
-            # Create individual file with header
-            cat > $TECHNIQUES_DIR/${filename}.yml << EOF
-# MITRE ATT&CK Technique: $filename
-# Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-# Source: https://github.com/teoseller/osquery-attck
-# Commit: $LATEST_COMMIT
-# Usage: fleetctl apply -f by-technique/${filename}.yml
-
-EOF
-            cat "$yml_file" >> $TECHNIQUES_DIR/${filename}.yml
+            cp "$yml_file" "$TECHNIQUES_DIR/${filename}.yml"
             INDIVIDUAL_COUNT=$((INDIVIDUAL_COUNT + 1))
         fi
     done
@@ -244,7 +307,7 @@ EOF
     
     echo
     
-    # Step 6.5: Validate generated policies (mirrors GitHub Actions validation)
+    # Step 6.5: Validate generated policies
     print_step "Validating generated policies..."
     
     VALIDATION_ERRORS=0
@@ -257,12 +320,12 @@ EOF
         print_success "Complete policy file exists and has content"
     fi
     
-    # Validate file structure and headers
-    if ! grep -q "# MITRE ATT&CK Framework Fleet Policies" "$POLICIES_DIR/mitre-attck-complete.yml"; then
-        print_error "Complete policy file missing required header"
+    # Validate file structure
+    if ! grep -q "^---" "$POLICIES_DIR/mitre-attck-complete.yml"; then
+        print_error "Complete policy file missing YAML document separators"
         VALIDATION_ERRORS=$((VALIDATION_ERRORS + 1))
     else
-        print_success "Complete policy file has proper header"
+        print_success "Complete policy file has proper YAML structure"
     fi
     
     # Check individual technique files
@@ -273,35 +336,49 @@ EOF
     else
         print_success "Generated $TECHNIQUE_COUNT_VALIDATION individual technique files"
         
-        # Validate headers in individual files
-        MISSING_HEADERS=0
+        # Validate individual files have proper YAML structure
+        INVALID_INDIVIDUAL=0
         for yml_file in "$TECHNIQUES_DIR"/*.yml; do
-            if [ -f "$yml_file" ] && ! grep -q "# MITRE ATT&CK Technique:" "$yml_file"; then
-                print_error "Missing header in $(basename "$yml_file")"
-                MISSING_HEADERS=$((MISSING_HEADERS + 1))
+            if [ -f "$yml_file" ]; then
+                if ! grep -q "^---" "$yml_file" || ! grep -q "^kind: query" "$yml_file"; then
+                    print_error "Invalid YAML structure in $(basename "$yml_file")"
+                    INVALID_INDIVIDUAL=$((INVALID_INDIVIDUAL + 1))
+                fi
             fi
         done
         
-        if [ $MISSING_HEADERS -eq 0 ]; then
-            print_success "All individual files have proper headers"
+        if [ $INVALID_INDIVIDUAL -eq 0 ]; then
+            print_success "All individual files have proper YAML structure"
         else
-            print_error "$MISSING_HEADERS files missing headers"
+            print_error "$INVALID_INDIVIDUAL files have invalid structure"
             VALIDATION_ERRORS=$((VALIDATION_ERRORS + 1))
         fi
     fi
     
-    # Validate Fleet CLI can parse the complete policy file
-    print_step "Running Fleet CLI dry-run validation..."
-    if fleetctl apply --dry-run -f "$POLICIES_DIR/mitre-attck-complete.yml" >/dev/null 2>&1; then
-        print_success "Fleet CLI dry-run validation passed"
-    else
-        print_error "Fleet CLI dry-run validation failed"
-        echo "Running with verbose output for debugging:"
-        fleetctl apply --dry-run -f "$POLICIES_DIR/mitre-attck-complete.yml" || true
+    # Validate Fleet query structure
+    print_step "Running Fleet query structure validation..."
+    
+    # Count Fleet query documents
+    VALID_QUERIES=$(grep -c "^kind: query" "$POLICIES_DIR/mitre-attck-complete.yml" 2>/dev/null || echo "0")
+    API_VERSIONS=$(grep -c "^apiVersion: v1" "$POLICIES_DIR/mitre-attck-complete.yml" 2>/dev/null || echo "0")
+    SPEC_SECTIONS=$(grep -c "^spec:" "$POLICIES_DIR/mitre-attck-complete.yml" 2>/dev/null || echo "0")
+    
+    # Check for YAML syntax errors
+    if grep -q "^[[:space:]]*-[[:space:]]*$" "$POLICIES_DIR/mitre-attck-complete.yml"; then
+        print_error "Found malformed YAML list items"
         VALIDATION_ERRORS=$((VALIDATION_ERRORS + 1))
+    elif [ "$VALID_QUERIES" -eq 0 ]; then
+        print_error "No Fleet queries found in policy file"
+        VALIDATION_ERRORS=$((VALIDATION_ERRORS + 1))
+    elif [ "$VALID_QUERIES" != "$API_VERSIONS" ] || [ "$VALID_QUERIES" != "$SPEC_SECTIONS" ]; then
+        print_error "Inconsistent Fleet query structure (queries: $VALID_QUERIES, apiVersions: $API_VERSIONS, specs: $SPEC_SECTIONS)"
+        VALIDATION_ERRORS=$((VALIDATION_ERRORS + 1))
+    else
+        print_success "Fleet query structure validation passed ($VALID_QUERIES queries found)"
+        print_warning "Note: fleetctl dry-run only supports config/team specs, not query specs"
     fi
     
-    # File size validation - ensure files aren't suspiciously small
+    # File size validation
     COMPLETE_SIZE=$(wc -c < "$POLICIES_DIR/mitre-attck-complete.yml")
     if [ $COMPLETE_SIZE -lt 1000 ]; then
         print_error "Complete policy file suspiciously small ($COMPLETE_SIZE bytes)"
@@ -310,7 +387,7 @@ EOF
         print_success "Complete policy file has reasonable size ($COMPLETE_SIZE bytes)"
     fi
     
-    # Summary of validation results
+    # Validation summary
     echo
     print_step "Validation Summary:"
     echo "- Validation errors: $VALIDATION_ERRORS"

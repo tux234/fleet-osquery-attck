@@ -1,9 +1,3 @@
-# MITRE ATT&CK Technique: windows_browsere-extensions
-# Generated: 2025-07-11 05:18:39 UTC
-# Source: https://github.com/teoseller/osquery-attck
-# Commit: 6df5f75db20f2b67f6245d1676b97ddd7005aadb
-# Usage: fleetctl apply -f by-technique/windows_browsere-extensions.yml
-
 ---
 apiVersion: v1
 kind: query
@@ -14,11 +8,10 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: Snapshot_chrome_extensions
+  name: MITRE - Lists all internet explorer extensions
   observer_can_run: false
-  platform: ""
-  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
-    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  platform: "windows"
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
 ---
 apiVersion: v1
@@ -30,9 +23,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: Snapshot_iexplorer_extensions
+  name: MITRE - Lists all internet explorer extensions
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: ' select * from  ie_extensions;'
   team: ""
 ---
@@ -45,11 +38,10 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: chrome_extensions
+  name: MITRE - Lists all internet explorer extensions
   observer_can_run: false
-  platform: ""
-  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
-    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  platform: "windows"
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
 ---
 apiVersion: v1
@@ -61,8 +53,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: iexplorer_extensions
+  name: MITRE - Lists all internet explorer extensions
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select * from ie_extensions;
   team: ""
