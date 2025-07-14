@@ -1,3 +1,4 @@
+
 ---
 apiVersion: v1
 kind: query
@@ -8,9 +9,9 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check mount on the host
+  name: MITRE - Mount Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT device, device_alias, flags, path,type from mounts;
   team: ""
 ---
@@ -23,9 +24,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List linux files that are setuid-enabled
+  name: MITRE - Setuid Binary Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from suid_bin;
   team: ""
 ---
@@ -38,9 +39,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Linux sudoers information
+  name: MITRE - Sudoers Configuration
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from sudoers;
   team: ""
 ---
@@ -53,10 +54,13 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check any bash reverse shell forwarded to the attacker
+  name: MITRE - Sudoers Integrity Check
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
   team: ""
 ---
 apiVersion: v1
@@ -68,9 +72,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check any bash reverse shell forwarded to the attacker
+  name: MITRE - Reverse Shell Detection
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM processes WHERE cmdline LIKE '/bin/bash -i >& /dev/tcp/%';
   team: ""
 ---
@@ -83,11 +87,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check USB device on the host
+  name: MITRE - USB Device Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM usb_devices;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -98,10 +103,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all chrome extensions
+  name: MITRE - Chrome Extensions
   observer_can_run: false
-  platform: "linux"
-  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
+  platform: ""
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING
+    (uid);
   team: ""
 ---
 apiVersion: v1
@@ -113,9 +119,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Firefox addons
+  name: MITRE - Firefox Addons
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
   team: ""
 ---
@@ -128,11 +134,13 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Opera extensions
+  name: MITRE - Opera Extensions
   observer_can_run: false
-  platform: "linux"
-  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING (uid);
+  platform: ""
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING
+    (uid);
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -143,11 +151,13 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List shell_history for each users on the system
+  name: MITRE - Shell History Analysis
   observer_can_run: false
-  platform: "linux"
-  query: select usr.username, sht.command, sht.history_file from shell_history sht JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
+  platform: ""
+  query: select usr.username, sht.command, sht.history_file from shell_history sht
+    JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -158,10 +168,14 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists hidden direcotry in relevant path
+  name: MITRE - Hidden Directory Discovery
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path like '/root/.%')) AND type='directory';
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path
+    like '/root/.%')) AND type='directory';
   team: ""
 ---
 apiVersion: v1
@@ -173,26 +187,37 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists hidden file in relevant path
+  name: MITRE - Hidden File Discovery
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path like '/root/.%')) AND type='regular';
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path
+    like '/root/.%')) AND type='regular';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Detect loading, unloading, and manipulating modules on Linux systems - ATT&CK T1215
+  description: Detect loading, unloading, and manipulating modules on Linux systems
+    - ATT&CK T1215
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Detect loading, unloading, and manipulating modules on Linux systems
+  name: MITRE - Kernel Module Activity
   observer_can_run: false
-  platform: "linux"
-  query: ' select usr.username, sht.command, sht.history_file from shell_history sht JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users) AND (sht.command LIKE ''%modprobe%'' OR sht.command LIKE ''%insmod%'' OR sht.command  LIKE ''%lsmod%'' OR sht.command  LIKE ''%rmmod%'' OR sht.command LIKE ''%modinfo%'' OR sht.command LIKE ''%linux-headers-$%''OR sht.command LIKE ''%kernel-devel-$%'');'
+  platform: ""
+  query: ' select usr.username, sht.command, sht.history_file from shell_history sht
+    JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users) AND
+    (sht.command LIKE ''%modprobe%'' OR sht.command LIKE ''%insmod%'' OR sht.command  LIKE
+    ''%lsmod%'' OR sht.command  LIKE ''%rmmod%'' OR sht.command LIKE ''%modinfo%''
+    OR sht.command LIKE ''%linux-headers-$%''OR sht.command LIKE ''%kernel-devel-$%'');'
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -203,11 +228,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Local job scheduling with Cron
+  name: MITRE - Cron Job Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select command, path from crontab;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -218,10 +244,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the Listening port List
+  name: MITRE - Process Listening Ports
   observer_can_run: false
-  platform: "linux"
-  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  platform: ""
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
@@ -233,26 +260,34 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Process Network Connections
   observer_can_run: false
-  platform: "linux"
-  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
+  platform: ""
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check Returns possible Reverse Shells on system processes - ATT&CK T1108,T1100
+  description: Check Returns possible Reverse Shells on system processes - ATT&CK
+    T1108,T1100
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check Returns possible Reverse Shells on system processes
+  name: MITRE - Shell Process Detection
   observer_can_run: false
-  platform: "linux"
-  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash') AND process_open_files.pid IS NULL;
+  platform: ""
+  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
+    cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
+    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
+    ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash')
+    AND process_open_files.pid IS NULL;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -263,10 +298,15 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under YOURIMPDIR1 dir
+  name: MITRE - Custom Directory Monitoring 1
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR1/%/%') OR (fi.path like '/YOURIMPDIR1/%%/.%') OR (fi.path like '/YOURIMPDIR1/.%') OR (fi.path like '/YOURIMPDIR1/%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR1/%/%') OR
+    (fi.path like '/YOURIMPDIR1/%%/.%') OR (fi.path like '/YOURIMPDIR1/.%') OR (fi.path
+    like '/YOURIMPDIR1/%'));
   team: ""
 ---
 apiVersion: v1
@@ -278,10 +318,15 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under YOURIMPDIR2 dir
+  name: MITRE - Custom Directory Monitoring 2
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR2/%/%') OR (fi.path like '/YOURIMPDIR2/%%/.%') OR (fi.path like '/YOURIMPDIR2/.%') OR (fi.path like '/YOURIMPDIR2/%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIR2/%/%') OR
+    (fi.path like '/YOURIMPDIR2/%%/.%') OR (fi.path like '/YOURIMPDIR2/.%') OR (fi.path
+    like '/YOURIMPDIR2/%'));
   team: ""
 ---
 apiVersion: v1
@@ -293,10 +338,15 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under YOURIMPDIRn dir
+  name: MITRE - Custom Directory Monitoring N
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIRn/%/%') OR (fi.path like '/YOURIMPDIRn/%%/.%') OR (fi.path like '/YOURIMPDIRn/.%') OR (fi.path like '/YOURIMPDIRn/%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/YOURIMPDIRn/%/%') OR
+    (fi.path like '/YOURIMPDIRn/%%/.%') OR (fi.path like '/YOURIMPDIRn/.%') OR (fi.path
+    like '/YOURIMPDIRn/%'));
   team: ""
 ---
 apiVersion: v1
@@ -308,10 +358,14 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under all home user dir
+  name: MITRE - Home Directory Discovery
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%/%') OR (fi.path like '/home/%') OR (fi.path like '/home/%/.%')OR (fi.path like '/home/.%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%/%') OR (fi.path
+    like '/home/%') OR (fi.path like '/home/%/.%')OR (fi.path like '/home/.%'));
   team: ""
 ---
 apiVersion: v1
@@ -323,10 +377,14 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under root dir
+  name: MITRE - Root Directory Discovery
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/root/%/%') OR (fi.path like '/root/%') OR (fi.path like '/root/%/.%')OR (fi.path like '/root/.%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/root/%/%') OR (fi.path
+    like '/root/%') OR (fi.path like '/root/%/.%')OR (fi.path like '/root/.%'));
   team: ""
 ---
 apiVersion: v1
@@ -338,10 +396,14 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under tmp dir
+  name: MITRE - Temp Directory Discovery
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/tmp/%/%') OR (fi.path like '/tmp/.%')OR (fi.path like '/tmp/%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/tmp/%/%') OR (fi.path
+    like '/tmp/.%')OR (fi.path like '/tmp/%'));
   team: ""
 ---
 apiVersion: v1
@@ -353,26 +415,34 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists files and directories under www dir
+  name: MITRE - Web Directory Discovery
   observer_can_run: false
-  platform: "linux"
-  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where ((fi.path like '/var/www/%/%') OR (fi.path like '/var/www/%/.%')OR (fi.path like '/var/www/.%') OR (fi.path like '/var/www/.%'));
+  platform: ""
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/var/www/%/%') OR (fi.path
+    like '/var/www/%/.%')OR (fi.path like '/var/www/.%') OR (fi.path like '/var/www/.%'));
   team: ""
+
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: List Linux System running processes with CMDLINE not null. - ATT&CK T1059,T1108,T1166,T1100,T1064,T1107,T1003,T1033,T1016,T1082,T1057,T1201,T1083,T1217,T1087,T1072,T1002
+  description: List Linux System running processes with CMDLINE not null. - ATT&CK
+    T1059,T1108,T1166,T1100,T1064,T1107,T1003,T1033,T1016,T1082,T1057,T1201,T1083,T1217,T1087,T1072,T1002
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Linux System running processes with CMDLINE not null.
+  name: MITRE - Process Discovery
   observer_can_run: false
-  platform: "linux"
-  query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
+  platform: ""
+  query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
+    pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -383,10 +453,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists last logged in users
+  name: MITRE - Last Login Discovery
   observer_can_run: false
-  platform: "linux"
-  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
+  platform: ""
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type
+    from last;
   team: ""
 ---
 apiVersion: v1
@@ -398,10 +469,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all logged in users
+  name: MITRE - Active User Sessions
   observer_can_run: false
-  platform: "linux"
-  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type from logged_in_users;
+  platform: ""
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
+    from logged_in_users;
   team: ""
 ---
 apiVersion: v1
@@ -413,11 +485,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all create and deleted account
+  name: MITRE - User Account Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from users;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -428,10 +501,11 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the Listening port List
+  name: MITRE - Listening Ports Monitoring
   observer_can_run: false
   platform: windows
-  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
@@ -443,70 +517,738 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Network Connections Monitoring
   observer_can_run: false
   platform: windows
-  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the Listening port List - ATT&CK T1043,T1090,T1094,T1205,T1219,T1105,T1065,T1102
-  discard_data: false
-  interval: 600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the Listening port List
-  observer_can_run: false
-  platform: windows
-  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the network connections from system processes - ATT&CK T1086,T1093,T1020,T1041,T1011,T1029,T1043,T1090,T1094,T1024,T1008,T1219,T1105,T1065
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
   discard_data: false
   interval: 60
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Chrome Parent Process Validation
   observer_can_run: false
-  platform: windows
-  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='chrome.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent != (SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='chrome.exe');
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: InstallUtil Execute, InstallUtil is a command-line utility that allows for installation and uninstallation of resources by executing specific installer components specified in .NET binaries - ATT&CK T1118
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1173,T1204
   discard_data: false
-  interval: 600
+  interval: 60
   logging: ""
   min_osquery_version: ""
-  name: MITRE - InstallUtil Execute, InstallUtil is a command-line utility that allows for installation and uninstallation of resources by executing specific installer components specified in .NET binaries
+  name: MITRE - CMD Parent Process Validation
   observer_can_run: false
-  platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%InstallUtil%';
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='cmd.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent!=(SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='cmd.exe');
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: PsExec Execute, is a free Microsoft tool that can be used to execute a program on another computer. - ATT&CK T1035,S0029
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Conhost Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes
+    where name='csrss.exe') AND LOWER(name)='conhost.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND
+    LOWER(name)='conhost.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Firefox Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='firefox.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent!=(SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='firefox.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Internet Explorer Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='iexplore.exe') OR pid=(SELECT pid
+    FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='iexplore.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - LSASS Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='wininit.exe') AND LOWER(name)='lsass.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND
+    LOWER(name)='lsass.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Notepad++ Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='notepad++.exe') OR pid=(SELECT pid
+    FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='notepad++.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Notepad Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='notepad.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent!=(SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='notepad.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1173,T1086,T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - PowerShell Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='explorer.exe') AND LOWER(name)='powershell.exe') OR pid=(SELECT pid
+    FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe')
+    AND LOWER(name)='powershell.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='wininit.exe') AND LOWER(name)='services.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND
+    LOWER(name)='services.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1204
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Svchost Parent Process Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
+    WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
+    where name='services.exe') AND LOWER(name)='svchost.exe') OR pid=(SELECT pid FROM
+    processes WHERE parent!=(SELECT pid from processes where name='services.exe')
+    AND LOWER(name)='svchost.exe');
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Conhost Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='conhost.exe' AND LOWER(path)!='c:\windows\system32\conhost.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - CSRSS Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='crss.exe' AND LOWER(path)!='c:\windows\system32\crss.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - DLLHost Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='dllhost.exe' AND LOWER(path)!='c:\windows\system32\dllhost.exe'
+    AND LOWER(path)!='c:\windows\syswow64\dllhost.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Explorer Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='explorer.exe' AND LOWER(path)!='c:\windows\explorer.exe'
+    AND LOWER(path)!='c:\windows\syswow64\explorer.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - LSASS Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='lsass.exe' AND LOWER(path)!='c:\windows\system32\lsass.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='services.exe' AND LOWER(path)!='c:\windows\system32\services.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - SMSS Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='smss.exe' AND LOWER(path)!='c:\windows\system32\smss.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Svchost Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='svchost.exe' AND LOWER(path)!='c:\windows\system32\svchost.exe'
+    AND LOWER(path)!='c:\windows\syswow64\svchost.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Wininit Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='wininit.exe' AND LOWER(path)!='c:\windows\system32\wininit.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Winlogon Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='winlogon.exe' AND LOWER(path)!='c:\windows\system32\winlogon.exe'
+    AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK
+    T1034
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - WMI Provider Path Validation
+  observer_can_run: false
+  platform: ""
+  query: SELECT * FROM processes WHERE LOWER(name)='wmiprvse.exe' AND LOWER(path)!='c:\windows\system32\wbem\wmiprvse.exe'
+    AND LOWER(path)!='c:\windows\syswow64\wbem\wmiprvse.exe' AND path!='';
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKCU_Control Panel_Desktop - ATT&CK
+    T1180
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Desktop Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control
+    Panel\Desktop';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
+    - ATT&CK T1004
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Winlogon Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows
+    NT\CurrentVersion\Winlogon';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+    - ATT&CK T1060
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Explorer Run Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKEY_CURRENT_USER_Environment - ATT&CK
+    T1037
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Logon Scripts Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select * from registry where key='HKEY_CURRENT_USER\Environment';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
+    - ATT&CK T1060
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - HKCU Run Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
+    - ATT&CK T1004
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - HKLM Winlogon Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Winlogon';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+    - ATT&CK T1060
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - HKLM Explorer Run Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Image_File_Execution_Options -
+    ATT&CK T1015
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Image File Execution Options Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Image File Execution Options';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
+    - ATT&CK T1103'
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - AppInit DLLs Registry Monitoring
+  observer_can_run: false
+  platform: windows
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Windows' and name='AppInit_DLLs';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon
+    - ATT&CK T1004
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - WOW64 Winlogon Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows
+    NT\CurrentVersion\Winlogon';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows
+    NT_CurrentVersion_Windows - ATT&CK T1103'
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - WOW64 AppInit DLLs Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Windows' and name='AppInit_DLLs';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
+    - ATT&CK T1138'
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Application Shimming Registry Monitoring Custom
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
+    nt\currentversion\appcompatflags\custom';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
+    - ATT&CK T1138'
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Application Shimming Registry Monitoring Installed
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
+    nt\currentversion\appcompatflags\installedsdb';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
+    - ATT&CK T1131
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - LSA Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
+    - ATT&CK T1128,S0108
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Netsh Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Netsh';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
+    - ATT&CK T1058
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - HKU Run Registry Monitoring
+  observer_can_run: false
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: InstallUtil Execute, InstallUtil is a command-line utility that allows
+    for installation and uninstallation of resources by executing specific installer
+    components specified in .NET binaries - ATT&CK T1118
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - PsExec Execute, is a free Microsoft tool that can be used to execute a program on another computer.
+  name: MITRE - InstallUtil Execution
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%PsExec%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%InstallUtil%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: PsExec Execute, is a free Microsoft tool that can be used to execute
+    a program on another computer. - ATT&CK T1035,S0029
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - PsExec Execution
+  observer_can_run: false
+  platform: windows
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%PsExec%';
   team: ""
 ---
 apiVersion: v1
@@ -518,7 +1260,7 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Prefetach File Directory
+  name: MITRE - Prefetch File Monitoring
   observer_can_run: false
   platform: windows
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
@@ -528,15 +1270,17 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Schtasks Execute, usaullay used to create a scheduled task - ATT&CK T1053,S0110
+  description: Schtasks Execute, usaullay used to create a scheduled task - ATT&CK
+    T1053,S0110
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Schtasks Execute, usaullay used to create a scheduled task
+  name: MITRE - Task Scheduling
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%at.exe%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%at.exe%';
   team: ""
 ---
 apiVersion: v1
@@ -548,40 +1292,46 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Attrib Execute, usaullay used to modify file attributes
+  name: MITRE - File Attribute Modification
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%attrib%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%attrib%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Bitsadmin Execute, Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through Component Object Model (COM) - ATT&CK T1197,S0190
+  description: Bitsadmin Execute, Windows Background Intelligent Transfer Service
+    (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through
+    Component Object Model (COM) - ATT&CK T1197,S0190
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Bitsadmin Execute, Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through Component Object Model (COM)
+  name: MITRE - BITS Transfer
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%bitsadmin%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%bitsadmin%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Certutil Execute, Certutil.exe is a legitimate built-in command-line program to manage certificates in Windows - ATT&CK T1105,T1140,T1130,S0160
+  description: Certutil Execute, Certutil.exe is a legitimate built-in command-line
+    program to manage certificates in Windows - ATT&CK T1105,T1140,T1130,S0160
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Certutil Execute, Certutil.exe is a legitimate built-in command-line program to manage certificates in Windows
+  name: MITRE - Certificate Utility
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%certutil%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%certutil%';
   team: ""
 ---
 apiVersion: v1
@@ -593,235 +1343,268 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Command-Line Interface Execute, CMD execution
+  name: MITRE - Command Line Interface
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMD%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%CMD%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: CMSTP Execute, The Microsoft Connection Manager Profile Installer (CMSTP.exe) is a command-line program used to install Connection Manager service profiles. - ATT&CK T1191
+  description: CMSTP Execute, The Microsoft Connection Manager Profile Installer (CMSTP.exe)
+    is a command-line program used to install Connection Manager service profiles.
+    - ATT&CK T1191
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - CMSTP Execute, The Microsoft Connection Manager Profile Installer (CMSTP.exe) is a command-line program used to install Connection Manager service profiles.
+  name: MITRE - Connection Manager Profile
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMSTP%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%CMSTP%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Command-Line Interface Execute, Cscript execution starts a script so that it runs in a command-line environment. - ATT&CK T1216
+  description: Command-Line Interface Execute, Cscript execution starts a script so
+    that it runs in a command-line environment. - ATT&CK T1216
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Command-Line Interface Execute, Cscript execution starts a script so that it runs in a command-line environment.
+  name: MITRE - Script Execution
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%cscript%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%cscript%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Esentutl Execute, is a legitimate built-in command-line program it could be used to create a exe from dump raw source.
+  description: Esentutl Execute, is a legitimate built-in command-line program it
+    could be used to create a exe from dump raw source.
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Esentutl Execute, is a legitimate built-in command-line program it could be used to create a exe from dump raw source.
+  name: MITRE - Database Utility
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%esentutl%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%esentutl%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Mshta Execute, is a utility that executes Microsoft HTML Applications (HTA) - ATT&CK T1170
+  description: Mshta Execute, is a utility that executes Microsoft HTML Applications
+    (HTA) - ATT&CK T1170
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Mshta Execute, is a utility that executes Microsoft HTML Applications (HTA)
+  name: MITRE - HTML Application
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mshta%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%mshta%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: mstsc.exe Execute, usaullay used to perform a RDP Session  - ATT&CK T1076
+  description: mstsc.exe Execute, usaullay used to perform a RDP Session  - ATT&CK
+    T1076
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - mstsc.exe Execute, usaullay used to perform a RDP Session '
+  name: MITRE - Remote Desktop
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mstsc%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%mstsc%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Net Execute, is used in command-line operations for control of users, groups, services, and network connections - ATT&CK T1126,T1087,T1201,T1069,S0039,T1018,T1007,T1124
+  description: Net Execute, is used in command-line operations for control of users,
+    groups, services, and network connections - ATT&CK T1126,T1087,T1201,T1069,S0039,T1018,T1007,T1124
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Net Execute, is used in command-line operations for control of users, groups, services, and network connections
+  name: MITRE - Network Commands
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%net.exe%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%net.exe%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Netsh Execute, Netsh.exe (also referred to as Netshell) is a command-line scripting utility used to interact with the network configuration of a system - ATT&CK T1128,T1063,S0108
+  description: Netsh Execute, Netsh.exe (also referred to as Netshell) is a command-line
+    scripting utility used to interact with the network configuration of a system
+    - ATT&CK T1128,T1063,S0108
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Netsh Execute, Netsh.exe (also referred to as Netshell) is a command-line scripting utility used to interact with the network configuration of a system
+  name: MITRE - Network Shell
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%netsh%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%netsh%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Netstat Execute,  is an operating system utility that displays active TCP connections, listening ports, and network statistics. - ATT&CK T1049,S0104
+  description: Netstat Execute,  is an operating system utility that displays active
+    TCP connections, listening ports, and network statistics. - ATT&CK T1049,S0104
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Netstat Execute,  is an operating system utility that displays active TCP connections, listening ports, and network statistics.
+  name: MITRE - Network Statistics
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%netstat%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%netstat%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system - ATT&CK T1086
+  description: POWERSHELL Execute, is a powerful interactive command-line interface
+    and scripting environment included in the Windows operating system - ATT&CK T1086
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system
+  name: MITRE - PowerShell Execution
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%POWERSHELL%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%POWERSHELL%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Reg Execute, Reg is a Windows utility used to interact with the Windows Registry.  - ATT&CK T1214,T1012,T1063,S0075
+  description: Reg Execute, Reg is a Windows utility used to interact with the Windows
+    Registry.  - ATT&CK T1214,T1012,T1063,S0075
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - Reg Execute, Reg is a Windows utility used to interact with the Windows Registry. '
+  name: MITRE - Registry Modification
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%reg%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%reg%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Regedit Execute, is a Windows utility used to interact with the Windows Registry. - ATT&CK T1214
+  description: Regedit Execute, is a Windows utility used to interact with the Windows
+    Registry. - ATT&CK T1214
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Regedit Execute, is a Windows utility used to interact with the Windows Registry.
+  name: MITRE - Registry Editor
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%regedit%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%regedit%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system - ATT&CK T1117
+  description: POWERSHELL Execute, is a powerful interactive command-line interface
+    and scripting environment included in the Windows operating system - ATT&CK T1117
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system
+  name: MITRE - DLL Registration
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%regsvr%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%regsvr%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Runas Execute, Allows a user to run specific tools and programs with different permissions than the user's current logon provides. - ATT&CK T1134
+  description: Runas Execute, Allows a user to run specific tools and programs with
+    different permissions than the user's current logon provides. - ATT&CK T1134
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Runas Execute, Allows a user to run specific tools and programs with different permissions than the user's current logon provides.
+  name: MITRE - Privilege Escalation
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%runas%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%runas%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: SC.exe Execute, Service Control - Create, Start, Stop, Query or Delete any Windows SERVICE. . - ATT&CK T1007
+  description: SC.exe Execute, Service Control - Create, Start, Stop, Query or Delete
+    any Windows SERVICE. . - ATT&CK T1007
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - SC.exe Execute, Service Control - Create, Start, Stop, Query or Delete any Windows SERVICE. .
+  name: MITRE - Service Control
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%sc%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%sc%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Schtasks Execute, usaullay used to create a scheduled task - ATT&CK T1053,S0111
+  description: Schtasks Execute, usaullay used to create a scheduled task - ATT&CK
+    T1053,S0111
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Schtasks Execute, usaullay used to create a scheduled task
+  name: MITRE - Scheduled Tasks
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%schtasks%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%schtasks%';
   team: ""
 ---
 apiVersion: v1
@@ -833,40 +1616,45 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - SVCHOST Processes not using the -k [name] convention
+  name: MITRE - Anomalous Svchost
   observer_can_run: false
   platform: windows
-  query: select * from processes where name like 'svchost.exe' and cmdline not like '%-k%';
+  query: select * from processes where name like 'svchost.exe' and cmdline not like
+    '%-k%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Systeminfo Execute, Systeminfo is a Windows utility that can be used to gather detailed information about a computer. - ATT&CK T1082,S0096
+  description: Systeminfo Execute, Systeminfo is a Windows utility that can be used
+    to gather detailed information about a computer. - ATT&CK T1082,S0096
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Systeminfo Execute, Systeminfo is a Windows utility that can be used to gather detailed information about a computer.
+  name: MITRE - System Information
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%systeminfo%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%systeminfo%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: taskeng Execute, usaullay used to create a scheduled task - ATT&CK T1053
+  description: taskeng Execute, usaullay used to create a scheduled task - ATT&CK
+    T1053
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - taskeng Execute, usaullay used to create a scheduled task
+  name: MITRE - Task Engine
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskeng%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%taskeng%';
   team: ""
 ---
 apiVersion: v1
@@ -878,10 +1666,11 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - Taskkill Execute, usaullay used to kill task '
+  name: MITRE - Process Termination
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskkill%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%taskkill%';
   team: ""
 ---
 apiVersion: v1
@@ -893,71 +1682,81 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Tasklist Execute, usaullay used to list task
+  name: MITRE - Process Enumeration
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%tasklist%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%tasklist%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: tscon.exe Execute, usaullay used to Terminal Services Console - ATT&CK T1076
+  description: tscon.exe Execute, usaullay used to Terminal Services Console - ATT&CK
+    T1076
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - tscon.exe Execute, usaullay used to Terminal Services Console
+  name: MITRE - Terminal Services
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%tscon%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%tscon%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Vssadmin Execute, usaullay used to execute activity on Volume Shadow copy
+  description: Vssadmin Execute, usaullay used to execute activity on Volume Shadow
+    copy
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Vssadmin Execute, usaullay used to execute activity on Volume Shadow copy
+  name: MITRE - Volume Shadow Copy
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%vssadmin%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%vssadmin%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Whoami Execute, used to prints the effective username of the current user
+  description: Whoami Execute, used to prints the effective username of the current
+    user
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Whoami Execute, used to prints the effective username of the current user
+  name: MITRE - User Identification
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%whoami%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%whoami%';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  description: Xcopy Execute, is used for copying multiple files or entire directory
+    trees from one directory to another and for copying files across a network.
   discard_data: false
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Xcopy Execute, is used for copying multiple files or entire directory trees from one directory to another and for copying files across a network.
+  name: MITRE - File Copy
   observer_can_run: false
   platform: windows
-  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%xcopy%';
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
+    like '%xcopy%';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -968,10 +1767,11 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Lists all chrome extensions
+  name: MITRE - Chrome Extensions Snapshot
   observer_can_run: false
-  platform: "windows"
-  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  platform: ""
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
+    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
 ---
 apiVersion: v1
@@ -983,9 +1783,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Lists all internet explorer extensions
+  name: MITRE - Internet Explorer Extensions Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: ' select * from  ie_extensions;'
   team: ""
 ---
@@ -998,10 +1798,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all chrome extensions
+  name: MITRE - Chrome Extensions
   observer_can_run: false
-  platform: "windows"
-  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  platform: ""
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
+    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
 ---
 apiVersion: v1
@@ -1013,11 +1814,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all internet explorer extensions
+  name: MITRE - Internet Explorer Extensions
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from ie_extensions;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1028,9 +1830,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - Symantec Endpoint Protection service Status change'
+  name: MITRE - Sophos Service Status 1
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
   team: ""
 ---
@@ -1043,9 +1845,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Services query
+  name: MITRE - Services Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services;
   team: ""
 ---
@@ -1058,9 +1860,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Symantec Endpoint Protection service Status change
+  name: MITRE - Sophos Service Status 2
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
   team: ""
 ---
@@ -1073,9 +1875,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Symantec Endpoint Protection service Status change
+  name: MITRE - Symantec Service Status
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
   team: ""
 ---
@@ -1088,9 +1890,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Defender service Status change
+  name: MITRE - Windows Defender Service Status
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
   team: ""
 ---
@@ -1103,9 +1905,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Firewall service Status change
+  name: MITRE - Windows Firewall Service Status
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
   team: ""
 ---
@@ -1118,9 +1920,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Security Service Status change
+  name: MITRE - Windows Security Service Status
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';
   team: ""
 ---
@@ -1133,11 +1935,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Update Service Status
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'wuauserv' AND status != 'RUNNING';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1148,9 +1951,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Certificate Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from certificates;
   team: ""
 ---
@@ -1163,9 +1966,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Users snapshot query
+  name: MITRE - Certificate Discovery Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from certificates;
   team: ""
 ---
@@ -1178,9 +1981,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Users with an active shell on the system.
+  name: MITRE - Active User Sessions
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from logged_in_users;
   team: ""
 ---
@@ -1193,9 +1996,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Installed Programs
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM users;
   team: ""
 ---
@@ -1208,9 +2011,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Installed Programs Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from programs;
   team: ""
 ---
@@ -1223,9 +2026,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - System information for identification.
+  name: MITRE - System Information
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM system_info;
   team: ""
 ---
@@ -1238,9 +2041,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - System info snapshot query
+  name: MITRE - System Information Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM system_info;
   team: ""
 ---
@@ -1253,9 +2056,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - System uptime
+  name: MITRE - System Uptime
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM uptime;
   team: ""
 ---
@@ -1268,9 +2071,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - User Account Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM users;
   team: ""
 ---
@@ -1283,9 +2086,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Users snapshot query
+  name: MITRE - User Account Discovery Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM users;
   team: ""
 ---
@@ -1298,11 +2101,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Windows Crash Analysis
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM windows_crashes;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1310,103 +2114,138 @@ spec:
   automations_enabled: false
   description: Check suspicious directory creation under AppData\Local - ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under AppData\Local
+  name: MITRE - AppData Local Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Local\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\users\%\AppData\Local\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under %TEMP% or AppData\Local\Temp - ATT&CK T1034,T1074,T1044
+  description: Check suspicious directory creation under %TEMP% or AppData\Local\Temp
+    - ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1880
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under %TEMP% or AppData\Local\Temp
+  name: MITRE - AppData Temp Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\local\temp\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\users\%\AppData\local\temp\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under %APPDATA% or %\AppData\Roaming - ATT&CK T1034,T1074,T1044
+  description: Check suspicious directory creation under %APPDATA% or %\AppData\Roaming
+    - ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1840
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under %APPDATA% or %\AppData\Roaming
+  name: MITRE - AppData Roaming Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\users\%\AppData\Roaming\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs - ATT&CK T1060,T1023
+  description: Check suspicious directory creation under Roaming\Microsoft\Windows\Start
+    Menu\Programs - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs
+  name: MITRE - User Start Menu Program Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup - ATT&CK T1060,T1023
+  description: Check suspicious directory creation under Roaming\Microsoft\Windows\Start
+    Menu\Programs\Startup - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+  name: MITRE - User Start Menu Startup Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND
+    f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu - ATT&CK T1060,T1023
+  description: Check suspicious directory creation under ProgramData\Microsoft\Windows\Start
+    Menu - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu
+  name: MITRE - ProgramData Start Menu Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu\Programs - ATT&CK T1060,T1023
+  description: Check suspicious directory creation under ProgramData\Microsoft\Windows\Start
+    Menu\Programs - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under ProgramData\Microsoft\Windows\Start Menu\Programs
+  name: MITRE - ProgramData Start Menu Program Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
@@ -1418,26 +2257,36 @@ spec:
   interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows
+  name: MITRE - Windows Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\Windows\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\Windows\%' AND f.type='directory';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious directory creation under c:\windows\temp - ATT&CK T1034,T1074,T1044
+  description: Check suspicious directory creation under c:\windows\temp - ATT&CK
+    T1034,T1074,T1044
   discard_data: false
-  interval: 1820
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious directory creation under c:\windows\temp
+  name: MITRE - Windows Temp Directory Creation
   observer_can_run: false
   platform: windows
-  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime, 'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime, datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch', 'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like 'C:\Windows\temp\%' AND f.type='directory';
+  query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
+    'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
+    datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
+    'UTC') as mtime from file f LEFT JOIN users u on f.uid=u.uid where f.path like
+    'C:\Windows\temp\%' AND f.type='directory';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1445,103 +2294,137 @@ spec:
   automations_enabled: false
   description: Check suspicious file creation under AppData\Local - ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under AppData\Local
+  name: MITRE - AppData Local File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\%' and type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\%'
+    and type='regular';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious file creation under %TEMP% or AppData\Local\Temp - ATT&CK T1034,T1074,T1044
+  description: Check suspicious file creation under %TEMP% or AppData\Local\Temp -
+    ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1900
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under %TEMP% or AppData\Local\Temp
+  name: MITRE - AppData Temp File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\temp\%' and type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Local\temp\%'
+    and type='regular';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious file creation under %APPDATA% or %\AppData\Roaming - ATT&CK T1034,T1074,T1044
+  description: Check suspicious file creation under %APPDATA% or %\AppData\Roaming
+    - ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1840
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under %APPDATA% or %\AppData\Roaming
+  name: MITRE - AppData Roaming File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\%' and type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\%'
+    and type='regular';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu - ATT&CK T1060,T1023
+  description: Check suspicious file creation under ProgramData\Microsoft\Windows\Start
+    Menu - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu
+  name: MITRE - ProgramData Start Menu File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start Menu\%' AND type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start
+    Menu\%' AND type='regular';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu\Programs - ATT&CK T1060,T1023
+  description: Check suspicious file creation under ProgramData\Microsoft\Windows\Start
+    Menu\Programs - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under ProgramData\Microsoft\Windows\Start Menu\Programs
+  name: MITRE - ProgramData Start Menu Program File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\%' AND type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\ProgramData\Microsoft\Windows\Start
+    Menu\Programs\%' AND type='regular';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs - ATT&CK T1060,T1023
+  description: Check suspicious file creation under Roaming\Microsoft\Windows\Start
+    Menu\Programs - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs
+  name: MITRE - User Start Menu Program File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\%' AND type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start
+    Menu\Programs\%' AND type='regular';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup - ATT&CK T1060,T1023
+  description: Check suspicious file creation under Roaming\Microsoft\Windows\Start
+    Menu\Programs\Startup - ATT&CK T1060,T1023
   discard_data: false
-  interval: 1860
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+  name: MITRE - User Start Menu Startup File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\%' AND type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\users\%\AppData\Roaming\Microsoft\Windows\Start
+    Menu\Programs\Startup\%' AND type='regular';
   team: ""
 ---
 apiVersion: v1
@@ -1553,10 +2436,13 @@ spec:
   interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows
+  name: MITRE - Windows File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\Windows\%' and type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\Windows\%' and type='regular';
   team: ""
 ---
 apiVersion: v1
@@ -1565,14 +2451,18 @@ spec:
   automations_enabled: false
   description: Check suspicious file creation under c:\windows\temp - ATT&CK T1034,T1074,T1044
   discard_data: false
-  interval: 1820
+  interval: 1800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check suspicious file creation under c:\windows\temp
+  name: MITRE - Windows Temp File Creation
   observer_can_run: false
   platform: windows
-  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC') as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime, 'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file USING (path) where path like 'C:\Windows\temp\%' and type='regular';
+  query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
+    as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file USING (path) where path like 'C:\Windows\temp\%' and type='regular';
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1583,9 +2473,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Windows Startup Items Osquery predefined query
+  name: MITRE - Startup Items Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from startup_items;
   team: ""
 ---
@@ -1598,26 +2488,29 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Startup Items Osquery predefined query
+  name: MITRE - Startup Items
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from startup_items;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Powershell script blocks reconstructed to their full script content, this table requires script block logging to be enabled. - ATT&CK T1086,T1064
+  description: Powershell script blocks reconstructed to their full script content,
+    this table requires script block logging to be enabled. - ATT&CK T1086,T1064
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Powershell script blocks reconstructed to their full script content, this table requires script block logging to be enabled.
+  name: MITRE - PowerShell Script Block Events
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from powershell_events;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1628,11 +2521,12 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Detect Processes running without a binary on disk
+  name: MITRE - Fileless Process Detection
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT name, path, pid FROM processes WHERE on_disk = 0;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1643,10 +2537,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all of the tasks in the Windows task scheduler
+  name: MITRE - Scheduled Tasks
   observer_can_run: false
   platform: windows
-  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC') from scheduled_tasks;
+  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC')
+    from scheduled_tasks;
   team: ""
 ---
 apiVersion: v1
@@ -1658,24 +2553,27 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all of the tasks in the Windows task scheduler
+  name: MITRE - Scheduled Tasks Monitoring
   observer_can_run: false
   platform: windows
-  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC') from scheduled_tasks;
+  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC')
+    from scheduled_tasks;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Lists all installed services configured to start automatically at boot - ATT&CK T1050
+  description: Lists all installed services configured to start automatically at boot
+    - ATT&CK T1050
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all installed services configured to start automatically at boot
+  name: MITRE - Auto-Start Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';
   team: ""
 ---
@@ -1688,11 +2586,12 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Services query
+  name: MITRE - Services Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services;
   team: ""
+
 ---
 apiVersion: v1
 kind: query
@@ -1703,10 +2602,12 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot List Windows System running processes
+  name: MITRE - Running Processes Snapshot
   observer_can_run: false
-  platform: "windows"
-  query: select processes.pid, processes.name, users.username, processes.path from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
+  platform: ""
+  query: select processes.pid, processes.name, users.username, processes.path from
+    processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
+    '';
   team: ""
 ---
 apiVersion: v1
@@ -1718,728 +2619,10 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Windows System running processes.
+  name: MITRE - Running Processes
   observer_can_run: false
-  platform: "windows"
-  query: select processes.pid, processes.name, users.username, processes.path, processes.cmdline from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1173,T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1173,T1086,T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1204
-  discard_data: false
-  interval: 60
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe');
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='conhost.exe' AND LOWER(path)!='c:\windows\system32\conhost.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='crss.exe' AND LOWER(path)!='c:\windows\system32\crss.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='dllhost.exe' AND LOWER(path)!='c:\windows\system32\dllhost.exe' AND LOWER(path)!='c:\windows\syswow64\dllhost.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='explorer.exe' AND LOWER(path)!='c:\windows\explorer.exe' AND LOWER(path)!='c:\windows\syswow64\explorer.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='lsass.exe' AND LOWER(path)!='c:\windows\system32\lsass.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='services.exe' AND LOWER(path)!='c:\windows\system32\services.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='smss.exe' AND LOWER(path)!='c:\windows\system32\smss.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='svchost.exe' AND LOWER(path)!='c:\windows\system32\svchost.exe' AND LOWER(path)!='c:\windows\syswow64\svchost.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='wininit.exe' AND LOWER(path)!='c:\windows\system32\wininit.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='winlogon.exe' AND LOWER(path)!='c:\windows\system32\winlogon.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1034
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Detect processes masquerading as legitimate Windows processes
-  observer_can_run: false
-  platform: "windows"
-  query: SELECT * FROM processes WHERE LOWER(name)='wmiprvse.exe' AND LOWER(path)!='c:\windows\system32\wbem\wmiprvse.exe' AND LOWER(path)!='c:\windows\syswow64\wbem\wmiprvse.exe' AND path!='';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKCU_Control Panel_Desktop - ATT&CK T1180
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Control Panel_Desktop
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control Panel\Desktop';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1004
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKEY_CURRENT_USER_Environment - ATT&CK T1037
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKEY_CURRENT_USER_Environment
-  observer_can_run: false
-  platform: "windows"
-  query: select * from registry where key='HKEY_CURRENT_USER\Environment';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run - ATT&CK T1060
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1004
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_Image_File_Execution_Options - ATT&CK T1015
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Image_File_Execution_Options
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows - ATT&CK T1103'
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
-  observer_can_run: false
-  platform: windows
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1004
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows - ATT&CK T1103'
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom - ATT&CK T1138'
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb - ATT&CK T1138'
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa - ATT&CK T1131
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa - ATT&CK T1128,S0108
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Netsh';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service - ATT&CK T1058
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
-  observer_can_run: false
-  platform: "windows"
-  query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
-  discard_data: false
-  interval: 3600
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run - ATT&CK T1060
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows - ATT&CK T1103'
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom - ATT&CK T1138'
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb - ATT&CK T1138'
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service - ATT&CK T1058
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
-  observer_can_run: false
-  platform: "windows"
-  query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: '**AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows - ATT&CK T1103'
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
-  team: ""
----
-apiVersion: v1
-kind: query
-spec:
-  automations_enabled: false
-  description: Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
-  discard_data: false
-  interval: 28800
-  logging: ""
-  min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
-  observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
+  platform: ""
+  query: select processes.pid, processes.name, users.username, processes.path, processes.cmdline
+    from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path
+    != '';
   team: ""

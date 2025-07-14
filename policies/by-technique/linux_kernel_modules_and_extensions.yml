@@ -3,13 +3,18 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Detect loading, unloading, and manipulating modules on Linux systems - ATT&CK T1215
+  description: Detect loading, unloading, and manipulating modules on Linux systems
+    - ATT&CK T1215
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Detect loading, unloading, and manipulating modules on Linux systems
+  name: MITRE - Kernel Module Activity
   observer_can_run: false
-  platform: "linux"
-  query: ' select usr.username, sht.command, sht.history_file from shell_history sht JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users) AND (sht.command LIKE ''%modprobe%'' OR sht.command LIKE ''%insmod%'' OR sht.command  LIKE ''%lsmod%'' OR sht.command  LIKE ''%rmmod%'' OR sht.command LIKE ''%modinfo%'' OR sht.command LIKE ''%linux-headers-$%''OR sht.command LIKE ''%kernel-devel-$%'');'
+  platform: ""
+  query: ' select usr.username, sht.command, sht.history_file from shell_history sht
+    JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users) AND
+    (sht.command LIKE ''%modprobe%'' OR sht.command LIKE ''%insmod%'' OR sht.command  LIKE
+    ''%lsmod%'' OR sht.command  LIKE ''%rmmod%'' OR sht.command LIKE ''%modinfo%''
+    OR sht.command LIKE ''%linux-headers-$%''OR sht.command LIKE ''%kernel-devel-$%'');'
   team: ""

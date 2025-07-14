@@ -8,10 +8,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the Listening port List
+  name: MITRE - Process Listening Ports
   observer_can_run: false
-  platform: "linux"
-  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  platform: ""
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
@@ -23,23 +24,30 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Process Network Connections
   observer_can_run: false
-  platform: "linux"
-  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
+  platform: ""
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Check Returns possible Reverse Shells on system processes - ATT&CK T1108,T1100
+  description: Check Returns possible Reverse Shells on system processes - ATT&CK
+    T1108,T1100
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Check Returns possible Reverse Shells on system processes
+  name: MITRE - Shell Process Detection
   observer_can_run: false
-  platform: "linux"
-  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash') AND process_open_files.pid IS NULL;
+  platform: ""
+  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
+    cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
+    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
+    ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash')
+    AND process_open_files.pid IS NULL;
   team: ""

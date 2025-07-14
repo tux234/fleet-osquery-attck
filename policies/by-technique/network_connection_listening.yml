@@ -8,10 +8,11 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the Listening port List
+  name: MITRE - Listening Ports Monitoring
   observer_can_run: false
   platform: windows
-  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
@@ -23,10 +24,12 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Network Connections Monitoring
   observer_can_run: false
   platform: windows
-  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
@@ -38,10 +41,11 @@ spec:
   interval: 600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the Listening port List
+  name: MITRE - Process Listening Ports
   observer_can_run: false
   platform: windows
-  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
 ---
 apiVersion: v1
@@ -50,11 +54,13 @@ spec:
   automations_enabled: false
   description: Returns the network connections from system processes - ATT&CK T1086,T1093,T1020,T1041,T1011,T1029,T1043,T1090,T1094,T1024,T1008,T1219,T1105,T1065
   discard_data: false
-  interval: 60
+  interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the network connections from system processes
+  name: MITRE - Process Network Connections
   observer_can_run: false
   platform: windows
-  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port != 0 AND p.name != '';
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
   team: ""

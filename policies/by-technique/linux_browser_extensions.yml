@@ -8,10 +8,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all chrome extensions
+  name: MITRE - Chrome Extensions
   observer_can_run: false
-  platform: "linux"
-  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
+  platform: ""
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING
+    (uid);
   team: ""
 ---
 apiVersion: v1
@@ -23,9 +24,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Firefox addons
+  name: MITRE - Firefox Addons
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
   team: ""
 ---
@@ -38,8 +39,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all Opera extensions
+  name: MITRE - Opera Extensions
   observer_can_run: false
-  platform: "linux"
-  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING (uid);
+  platform: ""
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING
+    (uid);
   team: ""

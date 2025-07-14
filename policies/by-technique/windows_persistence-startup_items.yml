@@ -8,9 +8,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Windows Startup Items Osquery predefined query
+  name: MITRE - Startup Items Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from startup_items;
   team: ""
 ---
@@ -23,8 +23,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Startup Items Osquery predefined query
+  name: MITRE - Startup Items
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from startup_items;
   team: ""
