@@ -8,10 +8,12 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot List Windows System running processes
+  name: MITRE - System Running Processes Snapshot
   observer_can_run: false
-  platform: "windows"
-  query: select processes.pid, processes.name, users.username, processes.path from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
+  platform: ""
+  query: select processes.pid, processes.name, users.username, processes.path from
+    processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
+    '';
   team: ""
 ---
 apiVersion: v1
@@ -23,8 +25,10 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Windows System running processes.
+  name: MITRE - System Running Processes
   observer_can_run: false
-  platform: "windows"
-  query: select processes.pid, processes.name, users.username, processes.path, processes.cmdline from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
+  platform: ""
+  query: select processes.pid, processes.name, users.username, processes.path, processes.cmdline
+    from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path
+    != '';
   team: ""

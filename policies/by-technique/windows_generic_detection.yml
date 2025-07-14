@@ -8,9 +8,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Certificates
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from certificates;
   team: ""
 ---
@@ -23,9 +23,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Users snapshot query
+  name: MITRE - Certificates Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from certificates;
   team: ""
 ---
@@ -38,9 +38,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Users with an active shell on the system.
+  name: MITRE - Logged In Users
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from logged_in_users;
   team: ""
 ---
@@ -53,9 +53,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Programs
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM users;
   team: ""
 ---
@@ -68,9 +68,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Programs Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from programs;
   team: ""
 ---
@@ -83,9 +83,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - System information for identification.
+  name: MITRE - System Information
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM system_info;
   team: ""
 ---
@@ -98,9 +98,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - System info snapshot query
+  name: MITRE - System Information Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM system_info;
   team: ""
 ---
@@ -113,9 +113,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - System uptime
+  name: MITRE - System Uptime
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM uptime;
   team: ""
 ---
@@ -128,9 +128,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Local system users.
+  name: MITRE - Users
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM users;
   team: ""
 ---
@@ -143,9 +143,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Users snapshot query
+  name: MITRE - Users Snapshot
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM users;
   team: ""
 ---
@@ -158,8 +158,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Extracted information from Windows crash logs (Minidumps).
+  name: MITRE - Windows Crashes
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: SELECT * FROM windows_crashes;
   team: ""

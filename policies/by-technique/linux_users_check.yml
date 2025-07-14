@@ -8,10 +8,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists last logged in users
+  name: MITRE - Last Login Discovery
   observer_can_run: false
-  platform: "linux"
-  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
+  platform: ""
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type
+    from last;
   team: ""
 ---
 apiVersion: v1
@@ -23,10 +24,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all logged in users
+  name: MITRE - Active User Sessions
   observer_can_run: false
-  platform: "linux"
-  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type from logged_in_users;
+  platform: ""
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
+    from logged_in_users;
   team: ""
 ---
 apiVersion: v1
@@ -38,8 +40,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all create and deleted account
+  name: MITRE - User Account Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select * from users;
   team: ""

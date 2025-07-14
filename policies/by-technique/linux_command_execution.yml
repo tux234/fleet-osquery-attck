@@ -8,8 +8,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List shell_history for each users on the system
+  name: MITRE - Shell History Analysis
   observer_can_run: false
-  platform: "linux"
-  query: select usr.username, sht.command, sht.history_file from shell_history sht JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
+  platform: ""
+  query: select usr.username, sht.command, sht.history_file from shell_history sht
+    JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
   team: ""

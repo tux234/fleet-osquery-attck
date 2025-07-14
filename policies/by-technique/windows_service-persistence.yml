@@ -3,14 +3,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Lists all installed services configured to start automatically at boot - ATT&CK T1050
+  description: Lists all installed services configured to start automatically at boot
+    - ATT&CK T1050
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all installed services configured to start automatically at boot
+  name: MITRE - Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';
   team: ""
 ---
@@ -23,8 +24,8 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Services query
+  name: MITRE - Services Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services;
   team: ""

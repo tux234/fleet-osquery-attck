@@ -8,8 +8,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - List Local job scheduling with Cron
+  name: MITRE - Cron Job Discovery
   observer_can_run: false
-  platform: "linux"
+  platform: ""
   query: select command, path from crontab;
   team: ""

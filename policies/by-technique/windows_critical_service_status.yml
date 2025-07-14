@@ -8,9 +8,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: 'MITRE - Symantec Endpoint Protection service Status change'
+  name: MITRE - Sophos Anti-Virus Services 1
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
   team: ""
 ---
@@ -23,9 +23,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Services query
+  name: MITRE - Services Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services;
   team: ""
 ---
@@ -38,9 +38,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Symantec Endpoint Protection service Status change
+  name: MITRE - Sophos Anti-Virus Services 2
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
   team: ""
 ---
@@ -53,9 +53,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Symantec Endpoint Protection service Status change
+  name: MITRE - Symantec Endpoint Protection Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
   team: ""
 ---
@@ -68,9 +68,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Defender service Status change
+  name: MITRE - Windows Defender Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
   team: ""
 ---
@@ -83,9 +83,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Firewall service Status change
+  name: MITRE - Windows Firewall Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
   team: ""
 ---
@@ -98,9 +98,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Security Service Status change
+  name: MITRE - Windows Security Service
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';
   team: ""
 ---
@@ -113,8 +113,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Windows Update Service Status change
+  name: MITRE - Windows Update Service
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: SELECT * FROM services WHERE name = 'wuauserv' AND status != 'RUNNING';
   team: ""

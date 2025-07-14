@@ -8,10 +8,11 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Lists all chrome extensions
+  name: MITRE - Browser Extensions Chrome Snapshot
   observer_can_run: false
-  platform: "windows"
-  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  platform: ""
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
+    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
 ---
 apiVersion: v1
@@ -23,9 +24,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Lists all internet explorer extensions
+  name: MITRE - Browser Extensions Internet Explorer Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: ' select * from  ie_extensions;'
   team: ""
 ---
@@ -38,10 +39,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all chrome extensions
+  name: MITRE - Browser Extensions Chrome
   observer_can_run: false
-  platform: "windows"
-  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
+  platform: ""
+  query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
+    from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
 ---
 apiVersion: v1
@@ -53,8 +55,8 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all internet explorer extensions
+  name: MITRE - Browser Extensions Internet Explorer
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from ie_extensions;
   team: ""

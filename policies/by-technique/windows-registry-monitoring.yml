@@ -3,44 +3,49 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKCU_Control Panel_Desktop - ATT&CK T1180
+  description: Returns the content of the key HKCU_Control Panel_Desktop - ATT&CK
+    T1180
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Control Panel_Desktop
+  name: MITRE - Registry Control Panel Desktop
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control Panel\Desktop';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control
+    Panel\Desktop';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1004
+  description: Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
+    - ATT&CK T1004
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
+  name: MITRE - Registry Current Version Winlogon
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows
+    NT\CurrentVersion\Winlogon';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
+  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+    - ATT&CK T1060
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+  name: MITRE - Registry Explorer Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
   team: ""
 ---
@@ -48,14 +53,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKEY_CURRENT_USER_Environment - ATT&CK T1037
+  description: Returns the content of the key HKEY_CURRENT_USER_Environment - ATT&CK
+    T1037
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKEY_CURRENT_USER_Environment
+  name: MITRE - Registry Logon Scripts
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select * from registry where key='HKEY_CURRENT_USER\Environment';
   team: ""
 ---
@@ -63,14 +69,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run - ATT&CK T1060
+  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
+    - ATT&CK T1060
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Registry Current User Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
   team: ""
 ---
@@ -78,29 +85,32 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1004
+  description: Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
+    - ATT&CK T1004
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon
+  name: MITRE - Registry Local Machine Winlogon
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Winlogon';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
+  description: Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+    - ATT&CK T1060
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+  name: MITRE - Registry Local Machine Explorer Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
   team: ""
 ---
@@ -108,104 +118,117 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_Image_File_Execution_Options - ATT&CK T1015
+  description: Returns the content of the key HKLM_Image_File_Execution_Options -
+    ATT&CK T1015
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Image_File_Execution_Options
+  name: MITRE - Registry Image File Execution Options
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Image File Execution Options';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows - ATT&CK T1103'
+  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
+    - ATT&CK T1103'
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
+  name: MITRE - Registry AppInit DLLs
   observer_can_run: false
   platform: windows
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Windows' and name='AppInit_DLLs';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1004
+  description: Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon
+    - ATT&CK T1004
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon
+  name: MITRE - Registry Wow6432Node Winlogon
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows
+    NT\CurrentVersion\Winlogon';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows - ATT&CK T1103'
+  description: '**AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows
+    NT_CurrentVersion_Windows - ATT&CK T1103'
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
+  name: MITRE - Registry Wow6432Node AppInit DLLs
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Windows' and name='AppInit_DLLs';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom - ATT&CK T1138'
+  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
+    - ATT&CK T1138'
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
+  name: MITRE - Registry Application Shimming Custom
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
+    nt\currentversion\appcompatflags\custom';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb - ATT&CK T1138'
+  description: '**Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
+    - ATT&CK T1138'
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
+  name: MITRE - Registry Application Shimming Installed SDB
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
+    nt\currentversion\appcompatflags\installedsdb';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa - ATT&CK T1131
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
+    - ATT&CK T1131
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
+  name: MITRE - Registry LSA Authentication
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
   team: ""
 ---
@@ -213,14 +236,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa - ATT&CK T1128,S0108
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
+    - ATT&CK T1128,S0108
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa
+  name: MITRE - Registry Netsh Helper
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Netsh';
   team: ""
 ---
@@ -228,14 +252,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service - ATT&CK T1058
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
+    - ATT&CK T1058
   discard_data: false
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
+  name: MITRE - Registry Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
   team: ""
 ---
@@ -248,9 +273,9 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Registry Users Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
   team: ""
 ---
@@ -258,14 +283,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
+  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+    - ATT&CK T1060
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+  name: MITRE - Registry Snapshot HKCU Explorer Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
   team: ""
 ---
@@ -273,14 +299,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run - ATT&CK T1060
+  description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
+    - ATT&CK T1060
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Registry Snapshot HKCU Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
   team: ""
 ---
@@ -288,14 +315,15 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1060
+  description: Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+    - ATT&CK T1060
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run
+  name: MITRE - Registry Snapshot HKLM Explorer Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
   team: ""
 ---
@@ -303,59 +331,66 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows - ATT&CK T1103'
+  description: '**AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows
+    NT_CurrentVersion_Windows - ATT&CK T1103'
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_Windows NT_CurrentVersion_Windows
+  name: MITRE - Registry Snapshot HKLM Wow6432Node AppInit DLLs
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Windows' and name='AppInit_DLLs';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom - ATT&CK T1138'
+  description: '**Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
+    - ATT&CK T1138'
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom
+  name: MITRE - Registry Snapshot HKLM Application Shimming Custom
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
+    nt\currentversion\appcompatflags\custom';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb - ATT&CK T1138'
+  description: '**Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
+    - ATT&CK T1138'
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb
+  name: MITRE - Registry Snapshot HKLM Application Shimming Installed SDB
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
+    nt\currentversion\appcompatflags\installedsdb';
   team: ""
 ---
 apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service - ATT&CK T1058
+  description: Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
+    - ATT&CK T1058
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service
+  name: MITRE - Registry Snapshot HKLM Services
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
   team: ""
 ---
@@ -363,15 +398,17 @@ apiVersion: v1
 kind: query
 spec:
   automations_enabled: false
-  description: '**AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows - ATT&CK T1103'
+  description: '**AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
+    - ATT&CK T1103'
   discard_data: false
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - **AppInit DLLs** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_Windows
+  name: MITRE - Registry Snapshot HKLM AppInit DLLs
   observer_can_run: false
-  platform: "windows"
-  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows' and name='AppInit_DLLs';
+  platform: ""
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+    NT\CurrentVersion\Windows' and name='AppInit_DLLs';
   team: ""
 ---
 apiVersion: v1
@@ -383,8 +420,8 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
+  name: MITRE - Registry Snapshot HKU Run
   observer_can_run: false
-  platform: "windows"
+  platform: ""
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
   team: ""

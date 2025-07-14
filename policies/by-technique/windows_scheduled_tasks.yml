@@ -8,10 +8,11 @@ spec:
   interval: 3600
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all of the tasks in the Windows task scheduler
+  name: MITRE - Scheduled Tasks
   observer_can_run: false
   platform: windows
-  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC') from scheduled_tasks;
+  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC')
+    from scheduled_tasks;
   team: ""
 ---
 apiVersion: v1
@@ -23,8 +24,9 @@ spec:
   interval: 28800
   logging: ""
   min_osquery_version: ""
-  name: MITRE - Lists all of the tasks in the Windows task scheduler
+  name: MITRE - Scheduled Tasks Monitoring
   observer_can_run: false
   platform: windows
-  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC') from scheduled_tasks;
+  query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC')
+    from scheduled_tasks;
   team: ""
