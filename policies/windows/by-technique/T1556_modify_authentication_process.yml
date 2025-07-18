@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKCU_Software_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1556
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Current Version Winlogon
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1556
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Local Machine Winlogon
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Software_Wow6432Node_Microsoft_WindowsNT_CurrentVersion_winlogon - ATT&CK T1556
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Wow6432Node Winlogon
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Control_Lsa - ATT&CK T1556
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry LSA Authentication
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
+  team: ""

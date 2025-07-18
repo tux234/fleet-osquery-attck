@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom - ATT&CK T1546.011
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Application Shimming Custom
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: **Application Shimming** Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb - ATT&CK T1546.011
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Application Shimming Installed SDB
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_Image_File_Execution_Options - ATT&CK T1546.012
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Image File Execution Options
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_custom - ATT&CK T1546.011
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Snapshot HKLM Application Shimming Custom
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: **Application Shimming** Snapshot Returns the content of the key HKLM_Software_Microsoft_WindowsNT_CurrentVersion_appcompatflags_installedsdb - ATT&CK T1546.011
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Snapshot HKLM Application Shimming Installed SDB
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
+  team: ""

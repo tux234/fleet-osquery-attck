@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists last logged in users - ATT&CK T1136,T1078
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Last Login Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
+  team: ""

@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor user account activity and authentication events - ATT&CK T1078 Valid Accounts
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - User Account Activity Monitoring
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select liu.user, liu.host, liu.tty, liu.pid, liu.type, 
+    datetime(liu.time,'unixepoch','UTC') as login_time,
+    u.uid, u.gid, u.username, u.description, u.directory, u.shell
+    from logged_in_users liu LEFT JOIN users u ON liu.user = u.username;
+  team: ""

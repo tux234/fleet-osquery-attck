@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Command-Line Interface Execute, CMD execution - ATT&CK T1106
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Command Line Interface
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMD%';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: POWERSHELL Execute, is a powerful interactive command-line interface and scripting environment included in the Windows operating system - ATT&CK T1106
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - PowerShell Execution
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%POWERSHELL%';
+  team: ""

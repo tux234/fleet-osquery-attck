@@ -1,0 +1,330 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Chrome Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - CMD Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Conhost Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Firefox Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Internet Explorer Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - LSASS Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Notepad++ Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Notepad Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - PowerShell Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.004
+  discard_data: false
+  interval: 60
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Svchost Parent Process Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe');
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Conhost Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='conhost.exe' AND LOWER(path)!='c:\windows\system32\conhost.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - CSRSS Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='crss.exe' AND LOWER(path)!='c:\windows\system32\crss.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - DLLHost Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='dllhost.exe' AND LOWER(path)!='c:\windows\system32\dllhost.exe' AND LOWER(path)!='c:\windows\syswow64\dllhost.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Explorer Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='explorer.exe' AND LOWER(path)!='c:\windows\explorer.exe' AND LOWER(path)!='c:\windows\syswow64\explorer.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - LSASS Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='lsass.exe' AND LOWER(path)!='c:\windows\system32\lsass.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='services.exe' AND LOWER(path)!='c:\windows\system32\services.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - SMSS Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='smss.exe' AND LOWER(path)!='c:\windows\system32\smss.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Svchost Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='svchost.exe' AND LOWER(path)!='c:\windows\system32\svchost.exe' AND LOWER(path)!='c:\windows\syswow64\svchost.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Wininit Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='wininit.exe' AND LOWER(path)!='c:\windows\system32\wininit.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Winlogon Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='winlogon.exe' AND LOWER(path)!='c:\windows\system32\winlogon.exe' AND path!='';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect processes masquerading as legitimate Windows processes - ATT&CK T1036.005
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - WMI Provider Path Validation
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM processes WHERE LOWER(name)='wmiprvse.exe' AND LOWER(path)!='c:\windows\system32\wbem\wmiprvse.exe' AND LOWER(path)!='c:\windows\syswow64\wbem\wmiprvse.exe' AND path!='';
+  team: ""

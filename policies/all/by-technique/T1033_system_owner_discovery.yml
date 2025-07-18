@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all currently logged in users - ATT&CK T1033 System Owner/User Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Active User Sessions
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
+    from logged_in_users;
+  team: ""

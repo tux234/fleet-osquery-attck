@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists files and directories under all home user dir - ATT&CK T1083 File and Directory Discovery
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Home Directory Discovery
+  observer_can_run: false
+  platform: "linux"
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
+    as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
+    'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
+    FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%/%') OR (fi.path
+    like '/home/%') OR (fi.path like '/home/%/.%')OR (fi.path like '/home/.%'));
+  team: ""

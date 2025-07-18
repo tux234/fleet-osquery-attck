@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all user accounts on the system - ATT&CK T1087 Account Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - User Account Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select * from users;
+  team: ""

@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all installed services configured to start automatically at boot - ATT&CK T1543.003
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service - ATT&CK T1543.003
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Services
+  observer_can_run: false
+  platform: "windows"
+  query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Services query
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Services Snapshot
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM services;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Returns the content of the key HKLM_SYSTEM_CurrentControlSet_Service - ATT&CK T1543.003
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Snapshot HKLM Services
+  observer_can_run: false
+  platform: "windows"
+  query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
+  team: ""

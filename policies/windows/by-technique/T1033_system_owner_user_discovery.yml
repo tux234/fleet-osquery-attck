@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Users with an active shell on the system. - ATT&CK T1033
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Logged In Users
+  observer_can_run: false
+  platform: "windows"
+  query: select * from logged_in_users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Local system users. - ATT&CK T1033
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Users
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Users snapshot query - ATT&CK T1033
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Users Snapshot
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT * FROM users;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Whoami Execute, used to prints the effective username of the current user
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - User Identification
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%whoami%';
+  team: ""

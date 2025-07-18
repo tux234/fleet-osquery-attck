@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List system running processes with command line arguments - ATT&CK T1057 Process Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
+    pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot of system running processes for baseline comparison - ATT&CK T1057 Process Discovery
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - System Running Processes Snapshot
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select processes.pid, processes.name, users.username, processes.path from
+    processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
+    '';
+  team: ""

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List linux files that are setuid-enabled
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Setuid Binary Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select * from suid_bin;
+  team: ""

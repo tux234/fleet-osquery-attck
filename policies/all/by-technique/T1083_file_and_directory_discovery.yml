@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor for suspicious executable files in common locations - ATT&CK T1083 File and Directory Discovery
+  discard_data: false
+  interval: 21600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Executable File Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select path, filename, size, datetime(mtime,'unixepoch','UTC') as mtime, 
+    datetime(ctime,'unixepoch','UTC') as ctime, md5, sha1, sha256
+    from hash h JOIN file f ON h.path = f.path 
+    WHERE f.size > 0 AND (f.path LIKE '%.exe' OR f.path LIKE '%.dll' 
+    OR f.path LIKE '%.so' OR f.path LIKE '%.dylib' OR (f.mode LIKE '%x%' AND f.size > 1024));
+  team: ""

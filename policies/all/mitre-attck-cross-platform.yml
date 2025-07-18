@@ -1,0 +1,216 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all currently logged in users - ATT&CK T1033 System Owner/User Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Active User Sessions
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
+    from logged_in_users;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns listening ports and associated processes - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Listening Ports
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns active network connections from system processes - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Network Connections
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Periodic snapshot of listening ports for baseline comparison - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Listening Ports Monitoring
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor process environment and parent-child relationships for injection indicators - ATT&CK T1055 Process Injection
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Environment Monitoring
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select p.pid, p.name, p.path, p.cmdline, p.parent, p.uid, p.gid, 
+    u.username, datetime(p.start_time,'unixepoch','UTC') as start_time,
+    (select name from processes where pid = p.parent) as parent_name,
+    (select path from processes where pid = p.parent) as parent_path
+    from processes p LEFT JOIN users u ON p.uid = u.uid 
+    WHERE p.path != '' AND p.name != '';
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List system running processes with command line arguments - ATT&CK T1057 Process Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
+    pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot of system running processes for baseline comparison - ATT&CK T1057 Process Discovery
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - System Running Processes Snapshot
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select processes.pid, processes.name, users.username, processes.path from
+    processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
+    '';
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detects possible reverse shells and suspicious shell processes - ATT&CK T1059 Command and Scripting Interpreter
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Shell Process Detection
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
+    cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
+    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
+    ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash' OR name = 'cmd.exe' OR name = 'powershell.exe')
+    AND process_open_files.pid IS NULL;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor user account activity and authentication events - ATT&CK T1078 Valid Accounts
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - User Account Activity Monitoring
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select liu.user, liu.host, liu.tty, liu.pid, liu.type, 
+    datetime(liu.time,'unixepoch','UTC') as login_time,
+    u.uid, u.gid, u.username, u.description, u.directory, u.shell
+    from logged_in_users liu LEFT JOIN users u ON liu.user = u.username;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Collect system information for baseline and anomaly detection - ATT&CK T1082 System Information Discovery
+  discard_data: false
+  interval: 86400
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - System Information Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select si.hostname, si.computer_name, si.hardware_vendor, si.hardware_model, 
+    si.hardware_version, si.hardware_serial, si.cpu_brand, si.cpu_physical_cores, 
+    si.cpu_logical_cores, si.physical_memory, os.name as os_name, os.version as os_version, 
+    os.major as os_major, os.minor as os_minor, os.build as os_build, os.platform as os_platform
+    from system_info si CROSS JOIN os_version os;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor for suspicious executable files in common locations - ATT&CK T1083 File and Directory Discovery
+  discard_data: false
+  interval: 21600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Executable File Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select path, filename, size, datetime(mtime,'unixepoch','UTC') as mtime, 
+    datetime(ctime,'unixepoch','UTC') as ctime, md5, sha1, sha256
+    from hash h JOIN file f ON h.path = f.path 
+    WHERE f.size > 0 AND (f.path LIKE '%.exe' OR f.path LIKE '%.dll' 
+    OR f.path LIKE '%.so' OR f.path LIKE '%.dylib' OR (f.mode LIKE '%x%' AND f.size > 1024));
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all user accounts on the system - ATT&CK T1087 Account Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - User Account Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select * from users;
+  team: ""

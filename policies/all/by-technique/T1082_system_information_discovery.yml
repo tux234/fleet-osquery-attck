@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Collect system information for baseline and anomaly detection - ATT&CK T1082 System Information Discovery
+  discard_data: false
+  interval: 86400
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - System Information Discovery
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select si.hostname, si.computer_name, si.hardware_vendor, si.hardware_model, 
+    si.hardware_version, si.hardware_serial, si.cpu_brand, si.cpu_physical_cores, 
+    si.cpu_logical_cores, si.physical_memory, os.name as os_name, os.version as os_version, 
+    os.major as os_major, os.minor as os_minor, os.build as os_build, os.platform as os_platform
+    from system_info si CROSS JOIN os_version os;
+  team: ""
