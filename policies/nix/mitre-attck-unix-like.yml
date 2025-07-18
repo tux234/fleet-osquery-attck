@@ -1,0 +1,173 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check mount on the host - ATT&CK T1025,T1052
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Mount Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT device, device_alias, flags, path, type from mounts;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists last logged in users - ATT&CK T1136,T1078
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Last Login Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check USB device on the host - ATT&CK T1052
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - USB Device Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT * FROM usb_devices;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List Local job scheduling with Cron - ATT&CK T1168
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Cron Job Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select command, path from crontab;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List shell_history for each users on the system - ATT&CK T1064,T1059,T1153,T1166,T1100,T1055,T1222,T1107,T1146,T1081,T1003,T1033,T1016,T1082,T1069,T1201,T1083,T1217,T1087
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Shell History Analysis
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select usr.username, sht.command, sht.history_file from shell_history sht JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List linux files that are setuid-enabled
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Setuid Binary Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select * from suid_bin;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check any bash reverse shell forwarded to the attacker - ATT&CK T1169,T1206
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Sudoers Integrity Check
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Linux sudoers information - ATT&CK T1169,T1206
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Sudoers Configuration
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: select * from sudoers;
+  team: ""
+
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all chrome extensions - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Chrome Extensions
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all Firefox addons - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Firefox Addons
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all Opera extensions - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Opera Extensions
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING (uid);
+  team: ""

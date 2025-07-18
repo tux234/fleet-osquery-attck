@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List Windows System running processes. - ATT&CK T1057
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - System Running Processes
+  observer_can_run: false
+  platform: "windows"
+  query: select processes.pid, processes.name, users.username, processes.path, processes.cmdline from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot List Windows System running processes - ATT&CK T1057
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - System Running Processes Snapshot
+  observer_can_run: false
+  platform: "windows"
+  query: select processes.pid, processes.name, users.username, processes.path from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detect Processes running without a binary on disk
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Processes Without Binary on Disk
+  observer_can_run: false
+  platform: "windows"
+  query: SELECT name, path, pid FROM processes WHERE on_disk = 0;
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: SVCHOST Processes not using the -k [name] convention
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Anomalous Svchost
+  observer_can_run: false
+  platform: "windows"
+  query: select * from processes where name like 'svchost.exe' and cmdline not like '%-k%';
+  team: ""

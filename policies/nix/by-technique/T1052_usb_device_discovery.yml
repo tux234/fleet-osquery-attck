@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check USB device on the host - ATT&CK T1052
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - USB Device Discovery
+  observer_can_run: false
+  platform: "linux,darwin"
+  query: SELECT * FROM usb_devices;
+  team: ""

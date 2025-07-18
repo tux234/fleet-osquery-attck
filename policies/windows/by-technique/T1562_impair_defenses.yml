@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns the content of the key HKCU_Control Panel_Desktop - ATT&CK T1562
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Registry Control Panel Desktop
+  observer_can_run: false
+  platform: "windows"
+  query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control Panel\Desktop';
+  team: ""

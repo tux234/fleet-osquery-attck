@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor process environment and parent-child relationships for injection indicators - ATT&CK T1055 Process Injection
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Environment Monitoring
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select p.pid, p.name, p.path, p.cmdline, p.parent, p.uid, p.gid, 
+    u.username, datetime(p.start_time,'unixepoch','UTC') as start_time,
+    (select name from processes where pid = p.parent) as parent_name,
+    (select path from processes where pid = p.parent) as parent_path
+    from processes p LEFT JOIN users u ON p.uid = u.uid 
+    WHERE p.path != '' AND p.name != '';
+  team: ""

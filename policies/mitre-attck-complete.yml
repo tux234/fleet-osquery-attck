@@ -11,7 +11,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Mount Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT device, device_alias, flags, path,type from mounts;
   team: ""
 ---
@@ -26,7 +26,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Setuid Binary Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select * from suid_bin;
   team: ""
 ---
@@ -41,7 +41,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Sudoers Configuration
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select * from sudoers;
   team: ""
 ---
@@ -56,7 +56,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Sudoers Integrity Check
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -74,7 +74,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Reverse Shell Detection
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT * FROM processes WHERE cmdline LIKE '/bin/bash -i >& /dev/tcp/%';
   team: ""
 ---
@@ -89,7 +89,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - USB Device Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM usb_devices;
   team: ""
 
@@ -105,7 +105,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Chrome Extensions
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING
     (uid);
   team: ""
@@ -121,7 +121,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Firefox Addons
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
   team: ""
 ---
@@ -136,7 +136,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Opera Extensions
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING
     (uid);
   team: ""
@@ -153,7 +153,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Shell History Analysis
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select usr.username, sht.command, sht.history_file from shell_history sht
     JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
   team: ""
@@ -170,7 +170,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Hidden Directory Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -189,7 +189,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Hidden File Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -210,7 +210,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Kernel Module Activity
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: ' select usr.username, sht.command, sht.history_file from shell_history sht
     JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users) AND
     (sht.command LIKE ''%modprobe%'' OR sht.command LIKE ''%insmod%'' OR sht.command  LIKE
@@ -230,7 +230,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Cron Job Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select command, path from crontab;
   team: ""
 
@@ -246,7 +246,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Process Listening Ports
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
     lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
@@ -262,7 +262,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Process Network Connections
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
     process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
     != 0 AND p.name != '';
@@ -280,7 +280,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Shell Process Detection
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
     cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
     FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
@@ -300,7 +300,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Custom Directory Monitoring 1
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -320,7 +320,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Custom Directory Monitoring 2
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -340,7 +340,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Custom Directory Monitoring N
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -360,7 +360,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Home Directory Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -379,7 +379,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Root Directory Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -398,7 +398,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Temp Directory Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -417,7 +417,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Web Directory Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux"
   query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC')
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
@@ -438,7 +438,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Process Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
     pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
   team: ""
@@ -455,7 +455,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Last Login Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type
     from last;
   team: ""
@@ -471,7 +471,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Active User Sessions
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
     from logged_in_users;
   team: ""
@@ -487,7 +487,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Account Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select * from users;
   team: ""
 
@@ -503,7 +503,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Listening Ports Monitoring
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
     lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
   team: ""
@@ -519,7 +519,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Network Connections Monitoring
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
     process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
     != 0 AND p.name != '';
@@ -538,7 +538,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Chrome Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='chrome.exe') OR pid=(SELECT pid FROM
@@ -558,7 +558,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - CMD Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='cmd.exe') OR pid=(SELECT pid FROM
@@ -578,7 +578,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Conhost Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes
     where name='csrss.exe') AND LOWER(name)='conhost.exe') OR pid=(SELECT pid FROM
@@ -598,7 +598,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Firefox Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='firefox.exe') OR pid=(SELECT pid FROM
@@ -618,7 +618,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Internet Explorer Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='iexplore.exe') OR pid=(SELECT pid
@@ -638,7 +638,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - LSASS Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='wininit.exe') AND LOWER(name)='lsass.exe') OR pid=(SELECT pid FROM
@@ -658,7 +658,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Notepad++ Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='notepad++.exe') OR pid=(SELECT pid
@@ -678,7 +678,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Notepad Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='notepad.exe') OR pid=(SELECT pid FROM
@@ -698,7 +698,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - PowerShell Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='explorer.exe') AND LOWER(name)='powershell.exe') OR pid=(SELECT pid
@@ -718,7 +718,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Services Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='wininit.exe') AND LOWER(name)='services.exe') OR pid=(SELECT pid FROM
@@ -738,7 +738,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Svchost Parent Process Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes
     WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes
     where name='services.exe') AND LOWER(name)='svchost.exe') OR pid=(SELECT pid FROM
@@ -759,7 +759,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Conhost Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='conhost.exe' AND LOWER(path)!='c:\windows\system32\conhost.exe'
     AND path!='';
   team: ""
@@ -776,7 +776,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - CSRSS Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='crss.exe' AND LOWER(path)!='c:\windows\system32\crss.exe'
     AND path!='';
   team: ""
@@ -793,7 +793,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - DLLHost Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='dllhost.exe' AND LOWER(path)!='c:\windows\system32\dllhost.exe'
     AND LOWER(path)!='c:\windows\syswow64\dllhost.exe' AND path!='';
   team: ""
@@ -810,7 +810,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Explorer Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='explorer.exe' AND LOWER(path)!='c:\windows\explorer.exe'
     AND LOWER(path)!='c:\windows\syswow64\explorer.exe' AND path!='';
   team: ""
@@ -827,7 +827,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - LSASS Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='lsass.exe' AND LOWER(path)!='c:\windows\system32\lsass.exe'
     AND path!='';
   team: ""
@@ -844,7 +844,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Services Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='services.exe' AND LOWER(path)!='c:\windows\system32\services.exe'
     AND path!='';
   team: ""
@@ -861,7 +861,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - SMSS Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='smss.exe' AND LOWER(path)!='c:\windows\system32\smss.exe'
     AND path!='';
   team: ""
@@ -878,7 +878,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Svchost Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='svchost.exe' AND LOWER(path)!='c:\windows\system32\svchost.exe'
     AND LOWER(path)!='c:\windows\syswow64\svchost.exe' AND path!='';
   team: ""
@@ -895,7 +895,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Wininit Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='wininit.exe' AND LOWER(path)!='c:\windows\system32\wininit.exe'
     AND path!='';
   team: ""
@@ -912,7 +912,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Winlogon Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='winlogon.exe' AND LOWER(path)!='c:\windows\system32\winlogon.exe'
     AND path!='';
   team: ""
@@ -929,7 +929,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - WMI Provider Path Validation
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='wmiprvse.exe' AND LOWER(path)!='c:\windows\system32\wbem\wmiprvse.exe'
     AND LOWER(path)!='c:\windows\syswow64\wbem\wmiprvse.exe' AND path!='';
   team: ""
@@ -947,7 +947,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Desktop Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Control
     Panel\Desktop';
   team: ""
@@ -964,7 +964,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Winlogon Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows
     NT\CurrentVersion\Winlogon';
   team: ""
@@ -981,7 +981,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Explorer Run Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
   team: ""
 ---
@@ -997,7 +997,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Logon Scripts Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select * from registry where key='HKEY_CURRENT_USER\Environment';
   team: ""
 ---
@@ -1013,7 +1013,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - HKCU Run Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
   team: ""
 ---
@@ -1029,7 +1029,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - HKLM Winlogon Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
     NT\CurrentVersion\Winlogon';
   team: ""
@@ -1046,7 +1046,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - HKLM Explorer Run Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
   team: ""
 ---
@@ -1062,7 +1062,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Image File Execution Options Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
     NT\CurrentVersion\Image File Execution Options';
   team: ""
@@ -1079,7 +1079,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppInit DLLs Registry Monitoring
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
     NT\CurrentVersion\Windows' and name='AppInit_DLLs';
   team: ""
@@ -1096,7 +1096,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - WOW64 Winlogon Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows
     NT\CurrentVersion\Winlogon';
   team: ""
@@ -1113,7 +1113,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - WOW64 AppInit DLLs Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
     NT\CurrentVersion\Windows' and name='AppInit_DLLs';
   team: ""
@@ -1130,7 +1130,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Application Shimming Registry Monitoring Custom
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
     nt\currentversion\appcompatflags\custom';
   team: ""
@@ -1147,7 +1147,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Application Shimming Registry Monitoring Installed
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows
     nt\currentversion\appcompatflags\installedsdb';
   team: ""
@@ -1164,7 +1164,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - LSA Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\system\CurrentControlSet\Control\Lsa';
   team: ""
 ---
@@ -1180,7 +1180,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Netsh Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Netsh';
   team: ""
 ---
@@ -1196,7 +1196,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Services Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
   team: ""
 ---
@@ -1211,7 +1211,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - HKU Run Registry Monitoring
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
   team: ""
 
@@ -1229,7 +1229,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - InstallUtil Execution
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%InstallUtil%';
   team: ""
@@ -1246,7 +1246,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - PsExec Execution
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%PsExec%';
   team: ""
@@ -1262,7 +1262,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Prefetch File Monitoring
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
   team: ""
 ---
@@ -1278,7 +1278,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Task Scheduling
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%at.exe%';
   team: ""
@@ -1294,7 +1294,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - File Attribute Modification
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%attrib%';
   team: ""
@@ -1312,7 +1312,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - BITS Transfer
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%bitsadmin%';
   team: ""
@@ -1329,7 +1329,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Certificate Utility
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%certutil%';
   team: ""
@@ -1345,7 +1345,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Command Line Interface
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%CMD%';
   team: ""
@@ -1363,7 +1363,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Connection Manager Profile
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%CMSTP%';
   team: ""
@@ -1380,7 +1380,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Script Execution
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%cscript%';
   team: ""
@@ -1397,7 +1397,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Database Utility
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%esentutl%';
   team: ""
@@ -1414,7 +1414,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - HTML Application
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%mshta%';
   team: ""
@@ -1431,7 +1431,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Remote Desktop
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%mstsc%';
   team: ""
@@ -1448,7 +1448,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Network Commands
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%net.exe%';
   team: ""
@@ -1466,7 +1466,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Network Shell
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%netsh%';
   team: ""
@@ -1483,7 +1483,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Network Statistics
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%netstat%';
   team: ""
@@ -1500,7 +1500,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - PowerShell Execution
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%POWERSHELL%';
   team: ""
@@ -1517,7 +1517,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Registry Modification
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%reg%';
   team: ""
@@ -1534,7 +1534,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Registry Editor
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%regedit%';
   team: ""
@@ -1551,7 +1551,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - DLL Registration
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%regsvr%';
   team: ""
@@ -1568,7 +1568,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Privilege Escalation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%runas%';
   team: ""
@@ -1585,7 +1585,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Service Control
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%sc%';
   team: ""
@@ -1602,7 +1602,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Scheduled Tasks
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%schtasks%';
   team: ""
@@ -1618,7 +1618,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Anomalous Svchost
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from processes where name like 'svchost.exe' and cmdline not like
     '%-k%';
   team: ""
@@ -1635,7 +1635,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - System Information
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%systeminfo%';
   team: ""
@@ -1652,7 +1652,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Task Engine
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%taskeng%';
   team: ""
@@ -1668,7 +1668,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Process Termination
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%taskkill%';
   team: ""
@@ -1684,7 +1684,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Process Enumeration
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%tasklist%';
   team: ""
@@ -1701,7 +1701,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Terminal Services
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%tscon%';
   team: ""
@@ -1718,7 +1718,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Volume Shadow Copy
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%vssadmin%';
   team: ""
@@ -1735,7 +1735,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Identification
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%whoami%';
   team: ""
@@ -1752,7 +1752,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - File Copy
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename
     like '%xcopy%';
   team: ""
@@ -1769,7 +1769,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Chrome Extensions Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
     from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
@@ -1785,7 +1785,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Internet Explorer Extensions Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: ' select * from  ie_extensions;'
   team: ""
 ---
@@ -1800,7 +1800,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Chrome Extensions
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path
     from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
   team: ""
@@ -1816,7 +1816,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Internet Explorer Extensions
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select * from ie_extensions;
   team: ""
 
@@ -1832,7 +1832,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Sophos Service Status 1
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
   team: ""
 ---
@@ -1847,7 +1847,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Services Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM services;
   team: ""
 ---
@@ -1862,7 +1862,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Sophos Service Status 2
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
   team: ""
 ---
@@ -1877,7 +1877,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Symantec Service Status
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
   team: ""
 ---
@@ -1892,7 +1892,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Defender Service Status
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
   team: ""
 ---
@@ -1907,7 +1907,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Firewall Service Status
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
   team: ""
 ---
@@ -1922,7 +1922,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Security Service Status
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';
   team: ""
 ---
@@ -1937,7 +1937,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Update Service Status
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM services WHERE name = 'wuauserv' AND status != 'RUNNING';
   team: ""
 
@@ -1953,7 +1953,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Certificate Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select * from certificates;
   team: ""
 ---
@@ -1968,7 +1968,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Certificate Discovery Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select * from certificates;
   team: ""
 ---
@@ -1983,7 +1983,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Active User Sessions
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select * from logged_in_users;
   team: ""
 ---
@@ -1998,7 +1998,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Installed Programs
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM users;
   team: ""
 ---
@@ -2013,7 +2013,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Installed Programs Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select * from programs;
   team: ""
 ---
@@ -2028,7 +2028,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - System Information
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM system_info;
   team: ""
 ---
@@ -2043,7 +2043,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - System Information Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: SELECT * FROM system_info;
   team: ""
 ---
@@ -2058,7 +2058,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - System Uptime
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM uptime;
   team: ""
 ---
@@ -2073,7 +2073,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Account Discovery
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM users;
   team: ""
 ---
@@ -2088,7 +2088,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Account Discovery Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM users;
   team: ""
 ---
@@ -2103,7 +2103,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Crash Analysis
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: SELECT * FROM windows_crashes;
   team: ""
 
@@ -2119,7 +2119,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppData Local Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2139,7 +2139,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppData Temp Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2159,7 +2159,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppData Roaming Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2179,7 +2179,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Start Menu Program Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2199,7 +2199,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Start Menu Startup Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2220,7 +2220,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - ProgramData Start Menu Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2240,7 +2240,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - ProgramData Start Menu Program Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2259,7 +2259,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2279,7 +2279,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Temp Directory Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select f.path,f.directory,u.username,f.hard_links,f.symlink,datetime(f.btime,
     'unixepoch', 'UTC') as btime, datetime(f.atime, 'unixepoch', 'UTC') as atime,
     datetime(f.ctime, 'unixepoch', 'UTC') as ctime, datetime(f.mtime, 'unixepoch',
@@ -2299,7 +2299,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppData Local File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2319,7 +2319,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppData Temp File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2339,7 +2339,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - AppData Roaming File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2359,7 +2359,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - ProgramData Start Menu File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2379,7 +2379,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - ProgramData Start Menu Program File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2399,7 +2399,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Start Menu Program File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2419,7 +2419,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - User Start Menu Startup File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2438,7 +2438,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2456,7 +2456,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Windows Temp File Creation
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: SELECT hash.md5, path, file.filename, datetime(file.btime, 'unixepoch', 'UTC')
     as btime, datetime(file.atime, 'unixepoch', 'UTC') as atime, datetime(file.ctime,
     'unixepoch', 'UTC') as ctime, datetime(file.mtime, 'unixepoch', 'UTC') as mtime
@@ -2475,7 +2475,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Startup Items Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select * from startup_items;
   team: ""
 ---
@@ -2490,7 +2490,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Startup Items
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select * from startup_items;
   team: ""
 
@@ -2507,7 +2507,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - PowerShell Script Block Events
   observer_can_run: false
-  platform: ""
+  platform: "windows"
   query: select * from powershell_events;
   team: ""
 
@@ -2523,7 +2523,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Fileless Process Detection
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT name, path, pid FROM processes WHERE on_disk = 0;
   team: ""
 
@@ -2539,7 +2539,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Scheduled Tasks
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC')
     from scheduled_tasks;
   team: ""
@@ -2555,7 +2555,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Scheduled Tasks Monitoring
   observer_can_run: false
-  platform: windows
+  platform: "windows"
   query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC')
     from scheduled_tasks;
   team: ""
@@ -2573,7 +2573,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Auto-Start Services
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';
   team: ""
 ---
@@ -2588,7 +2588,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Services Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: SELECT * FROM services;
   team: ""
 
@@ -2604,7 +2604,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Running Processes Snapshot
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin"
   query: select processes.pid, processes.name, users.username, processes.path from
     processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
     '';
@@ -2621,7 +2621,7 @@ spec:
   min_osquery_version: ""
   name: MITRE - Running Processes
   observer_can_run: false
-  platform: ""
+  platform: "linux,darwin,windows"
   query: select processes.pid, processes.name, users.username, processes.path, processes.cmdline
     from processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path
     != '';

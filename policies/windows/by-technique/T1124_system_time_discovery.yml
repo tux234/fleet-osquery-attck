@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: taskeng Execute, usaullay used to create a scheduled task - ATT&CK T1124
+  discard_data: false
+  interval: 600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Task Engine
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%taskeng%';
+  team: ""

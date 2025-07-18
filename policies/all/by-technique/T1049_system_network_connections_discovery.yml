@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns listening ports and associated processes - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Listening Ports
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns active network connections from system processes - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Process Network Connections
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
+  team: ""
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Periodic snapshot of listening ports for baseline comparison - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 28800
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Listening Ports Monitoring
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+  team: ""

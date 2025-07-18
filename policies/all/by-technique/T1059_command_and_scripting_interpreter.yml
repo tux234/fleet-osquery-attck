@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detects possible reverse shells and suspicious shell processes - ATT&CK T1059 Command and Scripting Interpreter
+  discard_data: false
+  interval: 3600
+  logging: ""
+  min_osquery_version: ""
+  name: MITRE - Shell Process Detection
+  observer_can_run: false
+  platform: "windows,linux,darwin"
+  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
+    cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
+    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
+    ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash' OR name = 'cmd.exe' OR name = 'powershell.exe')
+    AND process_open_files.pid IS NULL;
+  team: ""

@@ -13,3 +13,6 @@ Thumbs.db
 
 # OS generated files
 Icon?
+
+# Claude AI artifacts
+.claude
