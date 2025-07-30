@@ -50,19 +50,6 @@ fleetctl apply -f policies/macos/mitre-attck-macos.yml
 fleetctl apply -f policies/windows/mitre-attck-windows.yml
 ```
 
-Or deploy by folder for all queries in an OS:
-
-```bash
-# Deploy all Linux queries by folder
-fleetctl apply -f policies/linux/
-
-# Deploy all Windows queries by folder  
-fleetctl apply -f policies/windows/
-
-# Deploy all macOS queries by folder
-fleetctl apply -f policies/macos/
-```
-
 Or deploy specific technique files:
 
 ```bash
