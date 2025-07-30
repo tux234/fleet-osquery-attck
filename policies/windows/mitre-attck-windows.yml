@@ -9,6 +9,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%esentutl%';
+
 ---
 apiVersion: v1
 kind: query
@@ -21,7 +22,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%net.exe%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -34,7 +35,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%sc%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -59,7 +60,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%PsExec%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -72,7 +73,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mstsc%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -110,7 +111,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from logged_in_users;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -123,7 +124,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM users;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -136,7 +137,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM users;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -161,7 +162,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='explorer.exe') AND LOWER(name)='chrome.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -174,7 +175,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='cmd.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -187,7 +188,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe') OR pid=(SELECT pid FROM processes WHERE parent != (SELECT pid from processes where name='csrss.exe') AND LOWER(name)='conhost.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -200,7 +201,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='firefox.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -213,7 +214,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='iexplore.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -226,7 +227,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='lsass.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -239,7 +240,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad++.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -252,7 +253,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='notepad.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -265,7 +266,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='explorer.exe') AND LOWER(name)='powershell.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -278,7 +279,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='wininit.exe') AND LOWER(name)='services.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -291,7 +292,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT name as bad_parent_child_name, pid bad_parent_child_pid FROM processes WHERE pid=(SELECT parent FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe') OR pid=(SELECT pid FROM processes WHERE parent!=(SELECT pid from processes where name='services.exe') AND LOWER(name)='svchost.exe');
----
+
 ---
 apiVersion: v1
 kind: query
@@ -304,7 +305,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='conhost.exe' AND LOWER(path)!='c:\windows\system32\conhost.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -317,7 +318,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='csrss.exe' AND LOWER(path)!='c:\windows\system32\csrss.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -330,7 +331,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='dllhost.exe' AND LOWER(path)!='c:\windows\system32\dllhost.exe' AND LOWER(path)!='c:\windows\syswow64\dllhost.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -343,7 +344,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='explorer.exe' AND LOWER(path)!='c:\windows\explorer.exe' AND LOWER(path)!='c:\windows\syswow64\explorer.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -356,7 +357,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='lsass.exe' AND LOWER(path)!='c:\windows\system32\lsass.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -369,7 +370,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='services.exe' AND LOWER(path)!='c:\windows\system32\services.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -382,7 +383,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='smss.exe' AND LOWER(path)!='c:\windows\system32\smss.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -395,7 +396,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='svchost.exe' AND LOWER(path)!='c:\windows\system32\svchost.exe' AND LOWER(path)!='c:\windows\syswow64\svchost.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -408,7 +409,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='wininit.exe' AND LOWER(path)!='c:\windows\system32\wininit.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -421,7 +422,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM processes WHERE LOWER(name)='winlogon.exe' AND LOWER(path)!='c:\windows\system32\winlogon.exe' AND path!='';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -459,7 +460,7 @@ spec:
   platform: "windows"
   query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
     lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -473,8 +474,9 @@ spec:
   platform: "windows"
   query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
     process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
-    != 0 AND p.name != '';
----
+    != 0 AND p.name != ';
+
+
 ---
 apiVersion: v1
 kind: query
@@ -500,7 +502,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,action,path,enabled,datetime(next_run_time,'unixepoch','UTC') from scheduled_tasks;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -526,10 +528,11 @@ spec:
   platform: "windows"
   query: select p.pid, p.name, p.path, p.cmdline, p.parent, p.uid, p.gid,
     u.username, datetime(p.start_time,'unixepoch','UTC') as start_time,
-    (select name from processes where pid = p.parent) as parent_name,
+    (select name from processes where pid = p.parent) as parent_nam,
     (select path from processes where pid = p.parent) as parent_path
     from processes p LEFT JOIN users u ON p.uid = u.uid
     WHERE p.path != '' AND p.name != '';
+
 ---
 apiVersion: v1
 kind: query
@@ -543,7 +546,7 @@ spec:
   platform: "windows"
   query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
     pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -557,7 +560,8 @@ spec:
   platform: "windows"
   query: select processes.pid, processes.name, users.username, processes.path from
     processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
-    '';
+    ';
+
 ---
 apiVersion: v1
 kind: query
@@ -571,9 +575,10 @@ spec:
   platform: "windows"
   query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
     cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
-    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
+    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_fils
     ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash' OR name = 'cmd.exe' OR name = 'powershell.exe')
     AND process_open_files.pid IS NULL;
+
 ---
 apiVersion: v1
 kind: query
@@ -586,7 +591,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -599,7 +604,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%attrib%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -625,8 +630,9 @@ spec:
   platform: "windows"
   query: select liu.user, liu.host, liu.tty, liu.pid, liu.type,
     datetime(liu.time,'unixepoch','UTC') as login_time,
-    u.uid, u.gid, u.username, u.description, u.directory, u.shell
+    u.uid, u.gid, u.username, u.description, u.directory, u.shel
     from logged_in_users liu LEFT JOIN users u ON liu.user = u.username;
+
 ---
 apiVersion: v1
 kind: query
@@ -640,9 +646,10 @@ spec:
   platform: "windows"
   query: select si.hostname, si.computer_name, si.hardware_vendor, si.hardware_model,
     si.hardware_version, si.hardware_serial, si.cpu_brand, si.cpu_physical_cores,
-    si.cpu_logical_cores, si.physical_memory, os.name as os_name, os.version as os_version,
+    si.cpu_logical_cores, si.physical_memory, os.name as os_name, os.version as os_versio,
     os.major as os_major, os.minor as os_minor, os.build as os_build, os.platform as os_platform
     from system_info si CROSS JOIN os_version os;
+
 ---
 apiVersion: v1
 kind: query
@@ -656,9 +663,10 @@ spec:
   platform: "windows"
   query: select path, filename, size, datetime(mtime,'unixepoch','UTC') as mtime,
     datetime(ctime,'unixepoch','UTC') as ctime, md5, sha1, sha256
-    from hash h JOIN file f ON h.path = f.path
+    from hash h JOIN file f ON h.path = f.pah
     WHERE f.size > 0 AND (f.path LIKE '%.exe' OR f.path LIKE '%.dll'
     OR f.path LIKE '%.so' OR f.path LIKE '%.dylib' OR (f.mode LIKE '%x%' AND f.size > 1024));
+
 ---
 apiVersion: v1
 kind: query
@@ -695,7 +703,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMD%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -720,7 +728,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%reg%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -757,7 +765,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -770,7 +778,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from ie_extensions;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -783,7 +791,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select u.username, ce.name,ce.identifier,ce.version,ce.description,ce.locale,ce.update_url,ce.author,ce.persistent,ce.path from chrome_extensions ce LEFT JOIN users u ON ce.uid = u.uid;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -844,7 +852,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%InstallUtil%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -857,7 +865,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%CMSTP%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -870,7 +878,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%mshta%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -883,7 +891,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%certutil%';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -944,7 +952,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE start_type='DEMAND_START' OR start_type='AUTO_START';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -957,7 +965,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name, type from registry where key='HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -970,7 +978,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -995,7 +1003,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1008,7 +1016,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\installedsdb';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1021,7 +1029,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1034,7 +1042,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\software\microsoft\windows nt\currentversion\appcompatflags\custom';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1059,7 +1067,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1072,7 +1080,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1085,7 +1093,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1098,7 +1106,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1111,7 +1119,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select * from startup_items;
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1124,7 +1132,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1137,7 +1145,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1150,7 +1158,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1163,7 +1171,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1200,7 +1208,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Winlogon';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1213,7 +1221,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1226,7 +1234,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1251,7 +1259,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SAVAdminService' AND status != 'RUNNING';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1264,7 +1272,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SavService' AND status != 'RUNNING';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1277,7 +1285,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'SepMasterService' AND status != 'RUNNING';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1290,7 +1298,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'WinDefend' AND status != 'RUNNING';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1303,7 +1311,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'MpsSvc' AND status != 'RUNNING';
----
+
 ---
 apiVersion: v1
 kind: query
@@ -1316,7 +1324,7 @@ spec:
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM services WHERE name = 'wscsvc' AND status != 'RUNNING';
----
+
 ---
 apiVersion: v1
 kind: query
