@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: query
 spec:
@@ -6,13 +5,10 @@ spec:
   description: Local system users. - ATT&CK T1082
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Certificates
   observer_can_run: false
   platform: "windows"
   query: select * from certificates;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -21,13 +17,10 @@ spec:
   description: Users snapshot query - ATT&CK T1082
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Certificates Snapshot
   observer_can_run: false
   platform: "windows"
   query: select * from certificates;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -36,13 +29,10 @@ spec:
   description: Local system users.
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Programs Snapshot
   observer_can_run: false
   platform: "windows"
   query: select * from programs;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -51,13 +41,10 @@ spec:
   description: System information for identification.
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - System Information
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM system_info;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -66,13 +53,10 @@ spec:
   description: System info snapshot query
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - System Information Snapshot
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM system_info;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -81,13 +65,10 @@ spec:
   description: System uptime
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - System Uptime
   observer_can_run: false
   platform: "windows"
   query: SELECT * FROM uptime;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -96,10 +77,7 @@ spec:
   description: Systeminfo Execute, Systeminfo is a Windows utility that can be used to gather detailed information about a computer. - ATT&CK T1082
   discard_data: false
   interval: 600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - System Information
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%systeminfo%';
-  team: ""

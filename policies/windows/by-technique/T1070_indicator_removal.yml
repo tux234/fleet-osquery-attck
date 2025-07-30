@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: query
 spec:
@@ -6,13 +5,10 @@ spec:
   description: Snapshot Prefetach File Directory - ATT&CK T1070.004
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Prefetch File Monitoring
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -21,13 +17,10 @@ spec:
   description: Attrib Execute, usaullay used to modify file attributes - ATT&CK T1070.001
   discard_data: false
   interval: 600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - File Attribute Modification
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%attrib%';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -36,10 +29,7 @@ spec:
   description: Vssadmin Execute, usaullay used to execute activity on Volume Shadow copy
   discard_data: false
   interval: 600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Volume Shadow Copy
   observer_can_run: false
   platform: "windows"
   query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%vssadmin%';
-  team: ""

@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: query
 spec:
@@ -6,8 +5,6 @@ spec:
   description: Lists files and directories under all home user dir - ATT&CK T1083 File and Directory Discovery
   discard_data: false
   interval: 600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Home Directory Discovery
   observer_can_run: false
   platform: "linux"
@@ -15,8 +12,7 @@ spec:
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
     FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%/%') OR (fi.path
-    like '/home/%') OR (fi.path like '/home/%/.%')OR (fi.path like '/home/.%'));
-  team: ""
+    like '/home/%') OR (fi.path like '/home/%/.%') OR (fi.path like '/home/.%'));
 
 ---
 apiVersion: v1
@@ -26,8 +22,6 @@ spec:
   description: Lists files and directories under www dir - ATT&CK T1083 File and Directory Discovery
   discard_data: false
   interval: 600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Web Directory Discovery
   observer_can_run: false
   platform: "linux"
@@ -35,8 +29,7 @@ spec:
     as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime,
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
     FROM hash JOIN file fi USING (path) where ((fi.path like '/var/www/%/%') OR (fi.path
-    like '/var/www/%/.%')OR (fi.path like '/var/www/.%') OR (fi.path like '/var/www/.%'));
-  team: ""
+    like '/var/www/%/.%') OR (fi.path like '/var/www/.%') OR (fi.path like '/var/www/.%'));
 
 ---
 apiVersion: v1
@@ -46,8 +39,6 @@ spec:
   description: Detect loading, unloading, and manipulating modules on Linux systems - ATT&CK T1547.006 Kernel Modules and Extensions
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Kernel Module Activity
   observer_can_run: false
   platform: "linux"
@@ -55,8 +46,7 @@ spec:
     JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users) AND
     (sht.command LIKE '%modprobe%' OR sht.command LIKE '%insmod%' OR sht.command  LIKE
     '%lsmod%' OR sht.command  LIKE '%rmmod%' OR sht.command LIKE '%modinfo%'
-    OR sht.command LIKE '%linux-headers-$%'OR sht.command LIKE '%kernel-devel-$%');
-  team: ""
+    OR sht.command LIKE '%linux-headers-$%' OR sht.command LIKE '%kernel-devel-$%');
 
 ---
 apiVersion: v1
@@ -66,8 +56,6 @@ spec:
   description: Lists hidden directory in relevant path - ATT&CK T1564.001 Hidden Files and Directories
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Hidden Directory Discovery
   observer_can_run: false
   platform: "linux"
@@ -76,7 +64,6 @@ spec:
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
     FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path
     like '/root/.%')) AND type='directory';
-  team: ""
 
 ---
 apiVersion: v1
@@ -86,8 +73,6 @@ spec:
   description: Lists hidden file in relevant path - ATT&CK T1564.001 Hidden Files and Directories
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Hidden File Discovery
   observer_can_run: false
   platform: "linux"
@@ -96,4 +81,3 @@ spec:
     'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime
     FROM hash JOIN file fi USING (path) where ((fi.path like '/home/%%/.%') OR (fi.path
     like '/root/.%')) AND type='regular';
-  team: ""

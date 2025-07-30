@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: query
 spec:
@@ -6,13 +5,10 @@ spec:
   description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run - ATT&CK T1547.001
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Current User Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -21,13 +17,10 @@ spec:
   description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1547.001
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Explorer Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -36,13 +29,10 @@ spec:
   description: Returns the content of the key HKLM_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1547.001
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Local Machine Explorer Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -51,13 +41,10 @@ spec:
   description: Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Users Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -66,13 +53,10 @@ spec:
   description: Windows Startup Items Osquery predefined query - ATT&CK T1547.001
   discard_data: false
   interval: 3600
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Startup Items
   observer_can_run: false
   platform: "windows"
   query: select * from startup_items;
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -81,13 +65,10 @@ spec:
   description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1547.001
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Snapshot HKCU Explorer Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -96,13 +77,10 @@ spec:
   description: Returns the content of the key HKCU_Software_Microsoft_Windows_CurrentVersion_Run - ATT&CK T1547.001
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Snapshot HKCU Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -111,13 +89,10 @@ spec:
   description: Returns the content of the key HKLMU_Software_Microsoft_Windows_CurrentVersion_Policies_Explorer_Run - ATT&CK T1547.001
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Snapshot HKLM Explorer Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -126,13 +101,10 @@ spec:
   description: Returns the content of the key HKU_Software_Microsoft_Windows_CurrentVersion_Run
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Registry Snapshot HKU Run
   observer_can_run: false
   platform: "windows"
   query: select name,type,data from registry where key='HKEY_USERS\Software\Microsoft\Windows\CurrentVersion\Run';
-  team: ""
 ---
 apiVersion: v1
 kind: query
@@ -141,10 +113,7 @@ spec:
   description: Snapshot Windows Startup Items Osquery predefined query - ATT&CK T1547.001
   discard_data: false
   interval: 28800
-  logging: ""
-  min_osquery_version: ""
   name: MITRE - Startup Items Snapshot
   observer_can_run: false
   platform: "windows"
   query: select * from startup_items;
-  team: ""
