@@ -1,0 +1,303 @@
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check mount on the host - ATT&CK T1025,T1052
+  discard_data: false
+  interval: 600
+  name: MITRE - Mount Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT device, device_alias, flags, path, type from mounts;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists last logged in users - ATT&CK T1136,T1078
+  discard_data: false
+  interval: 3600
+  name: MITRE - Last Login Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,username,tty,pid,type from last;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all currently logged in users - ATT&CK T1033 System Owner/User Discovery
+  discard_data: false
+  interval: 3600
+  name: MITRE - Active User Sessions
+  observer_can_run: false
+  platform: "darwin"
+  query: select datetime(time,'unixepoch','UTC') as time_utc,host,user,tty,pid,type
+    from logged_in_users;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns listening ports and associated processes - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 3600
+  name: MITRE - Process Listening Ports
+  observer_can_run: false
+  platform: "darwin"
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Returns active network connections from system processes - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 3600
+  name: MITRE - Process Network Connections
+  observer_can_run: false
+  platform: "darwin"
+  query: select DISTINCT p.name, p.path, pos.remote_address, pos.remote_port from
+    process_open_sockets pos LEFT JOIN processes p ON pos.pid = p.pid WHERE pos.remote_port
+    != 0 AND p.name != '';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Periodic snapshot of listening ports for baseline comparison - ATT&CK T1049 System Network Connections Discovery
+  discard_data: false
+  interval: 28800
+  name: MITRE - Listening Ports Monitoring
+  observer_can_run: false
+  platform: "darwin"
+  query: select p.name, p.path, lp.port, lp.address, lp.protocol  from listening_ports
+    lp LEFT JOIN processes p ON lp.pid = p.pid WHERE lp.port != 0 AND p.name != '';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check USB device on the host - ATT&CK T1052
+  discard_data: false
+  interval: 3600
+  name: MITRE - USB Device Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT * FROM usb_devices;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List Local job scheduling with Cron - ATT&CK T1053
+  discard_data: false
+  interval: 3600
+  name: MITRE - Cron Job Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select command, path from crontab;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor process environment and parent-child relationships for injection indicators - ATT&CK T1055 Process Injection
+  discard_data: false
+  interval: 3600
+  name: MITRE - Process Environment Monitoring
+  observer_can_run: false
+  platform: "darwin"
+  query: select p.pid, p.name, p.path, p.cmdline, p.parent, p.uid, p.gid, 
+    u.username, datetime(p.start_time,'unixepoch','UTC') as start_time,
+    (select name from processes where pid = p.parent) as parent_name,
+    (select path from processes where pid = p.parent) as parent_path
+    from processes p LEFT JOIN users u ON p.uid = u.uid 
+    WHERE p.path != '' AND p.name != '';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List system running processes with command line arguments - ATT&CK T1057 Process Discovery
+  discard_data: false
+  interval: 3600
+  name: MITRE - Process Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
+    pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot of system running processes for baseline comparison - ATT&CK T1057 Process Discovery
+  discard_data: false
+  interval: 28800
+  name: MITRE - System Running Processes Snapshot
+  observer_can_run: false
+  platform: "darwin"
+  query: select processes.pid, processes.name, users.username, processes.path from
+    processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
+    '';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Detects possible reverse shells and suspicious shell processes - ATT&CK T1059 Command and Scripting Interpreter
+  discard_data: false
+  interval: 3600
+  name: MITRE - Shell Process Detection
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT DISTINCT(processes.pid),processes.parent,processes.name,processes.path,processes.cmdline,processes.cwd,processes.root,processes.uid,processes.gid,processes.start_time,process_open_sockets.remote_address,process_open_sockets.remote_port,(SELECT
+    cmdline FROM processes AS parent_cmdline WHERE pid = processes.parent) AS parent_cmdline
+    FROM processes JOIN process_open_sockets USING(pid) LEFT OUTER JOIN process_open_files
+    ON processes.pid = process_open_files.pid WHERE (name = 'sh' OR name = 'bash' OR name = 'cmd.exe' OR name = 'powershell.exe')
+    AND process_open_files.pid IS NULL;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List shell_history for each users on the system - ATT&CK T1064,T1059,T1153,T1166,T1100,T1055,T1222,T1107,T1146,T1081,T1003,T1033,T1016,T1082,T1069,T1201,T1083,T1217,T1087
+  discard_data: false
+  interval: 3600
+  name: MITRE - Shell History Analysis
+  observer_can_run: false
+  platform: "darwin"
+  query: select usr.username, sht.command, sht.history_file from shell_history sht JOIN users usr ON sht.uid = usr.uid WHERE sht.uid IN (SELECT uid from users);
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: List linux files that are setuid-enabled
+  discard_data: false
+  interval: 3600
+  name: MITRE - Setuid Binary Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select * from suid_bin;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor user account activity and authentication events - ATT&CK T1078 Valid Accounts
+  discard_data: false
+  interval: 3600
+  name: MITRE - User Account Activity Monitoring
+  observer_can_run: false
+  platform: "darwin"
+  query: select liu.user, liu.host, liu.tty, liu.pid, liu.type, 
+    datetime(liu.time,'unixepoch','UTC') as login_time,
+    u.uid, u.gid, u.username, u.description, u.directory, u.shell
+    from logged_in_users liu LEFT JOIN users u ON liu.user = u.username;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Collect system information for baseline and anomaly detection - ATT&CK T1082 System Information Discovery
+  discard_data: false
+  interval: 86400
+  name: MITRE - System Information Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select si.hostname, si.computer_name, si.hardware_vendor, si.hardware_model, 
+    si.hardware_version, si.hardware_serial, si.cpu_brand, si.cpu_physical_cores, 
+    si.cpu_logical_cores, si.physical_memory, os.name as os_name, os.version as os_version, 
+    os.major as os_major, os.minor as os_minor, os.build as os_build, os.platform as os_platform
+    from system_info si CROSS JOIN os_version os;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor for suspicious executable files in common locations - ATT&CK T1083 File and Directory Discovery
+  discard_data: false
+  interval: 21600
+  name: MITRE - Executable File Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select path, filename, size, datetime(mtime,'unixepoch','UTC') as mtime, 
+    datetime(ctime,'unixepoch','UTC') as ctime, md5, sha1, sha256
+    from hash h JOIN file f ON h.path = f.path 
+    WHERE f.size > 0 AND (f.path LIKE '%.exe' OR f.path LIKE '%.dll' 
+    OR f.path LIKE '%.so' OR f.path LIKE '%.dylib' OR (f.mode LIKE '%x%' AND f.size > 1024));
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Monitor integrity of sudoers configuration file for unauthorized modifications - ATT&CK T1548.003
+  discard_data: false
+  interval: 3600
+  name: MITRE - Sudoers Integrity Check
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT hash.sha1, fi.path, fi.filename, datetime(fi.btime, 'unixepoch', 'UTC') as btime, datetime(fi.atime, 'unixepoch', 'UTC') as atime, datetime(fi.ctime, 'unixepoch', 'UTC') as ctime, datetime(fi.mtime, 'unixepoch', 'UTC') as mtime FROM hash JOIN file fi USING (path) where (fi.path like '/etc/sudoers') AND type='regular';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all user accounts on the system - ATT&CK T1087 Account Discovery
+  discard_data: false
+  interval: 3600
+  name: MITRE - User Account Discovery
+  observer_can_run: false
+  platform: "darwin"
+  query: select * from users;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Linux sudoers information - ATT&CK T1548.003
+  discard_data: false
+  interval: 3600
+  name: MITRE - Sudoers Configuration
+  observer_can_run: false
+  platform: "darwin"
+  query: select * from sudoers;
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all chrome extensions - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  name: MITRE - Chrome Extensions
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN chrome_extensions ce USING (uid);
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all Firefox addons - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  name: MITRE - Firefox Addons
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN firefox_addons ce USING (uid);
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Lists all Opera extensions - ATT&CK T1176
+  discard_data: false
+  interval: 3600
+  name: MITRE - Opera Extensions
+  observer_can_run: false
+  platform: "darwin"
+  query: SELECT u.username, ce.* FROM users u CROSS JOIN opera_extensions ce USING (uid);

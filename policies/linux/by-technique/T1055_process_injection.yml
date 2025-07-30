@@ -7,7 +7,7 @@ spec:
   interval: 3600
   name: MITRE - Process Environment Monitoring
   observer_can_run: false
-  platform: "windows"
+  platform: "linux"
   query: select p.pid, p.name, p.path, p.cmdline, p.parent, p.uid, p.gid, 
     u.username, datetime(p.start_time,'unixepoch','UTC') as start_time,
     (select name from processes where pid = p.parent) as parent_name,

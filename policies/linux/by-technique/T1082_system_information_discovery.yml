@@ -7,7 +7,7 @@ spec:
   interval: 86400
   name: MITRE - System Information Discovery
   observer_can_run: false
-  platform: "windows"
+  platform: "linux"
   query: select si.hostname, si.computer_name, si.hardware_vendor, si.hardware_model, 
     si.hardware_version, si.hardware_serial, si.cpu_brand, si.cpu_physical_cores, 
     si.cpu_logical_cores, si.physical_memory, os.name as os_name, os.version as os_version, 

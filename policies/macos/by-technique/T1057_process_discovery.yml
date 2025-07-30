@@ -7,7 +7,7 @@ spec:
   interval: 3600
   name: MITRE - Process Discovery
   observer_can_run: false
-  platform: "windows"
+  platform: "darwin"
   query: select pr.pid, pr.name, usr.username, pr.path, pr.cmdline from processes
     pr LEFT JOIN users usr ON pr.uid = usr.uid WHERE pr.cmdline != '';
 ---
@@ -20,7 +20,7 @@ spec:
   interval: 28800
   name: MITRE - System Running Processes Snapshot
   observer_can_run: false
-  platform: "windows"
+  platform: "darwin"
   query: select processes.pid, processes.name, users.username, processes.path from
     processes LEFT JOIN users ON processes.uid = users.uid WHERE processes.path !=
     '';

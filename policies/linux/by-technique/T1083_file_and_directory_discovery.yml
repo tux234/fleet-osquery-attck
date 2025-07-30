@@ -7,7 +7,7 @@ spec:
   interval: 21600
   name: MITRE - Executable File Discovery
   observer_can_run: false
-  platform: "windows"
+  platform: "linux"
   query: select path, filename, size, datetime(mtime,'unixepoch','UTC') as mtime, 
     datetime(ctime,'unixepoch','UTC') as ctime, md5, sha1, sha256
     from hash h JOIN file f ON h.path = f.path 
