@@ -16,3 +16,6 @@ Icon?
 
 # Claude AI artifacts
 .claude
+
+# Git artifacts
+.gitignore
