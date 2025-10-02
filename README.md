@@ -1,6 +1,6 @@
-# Fleet MITRE ATT&CK Detection Policies
+# Fleet MITRE ATT&CK Detection queries
 
-Ready-to-use Fleet policies for detecting adversary tactics, techniques, and procedures based on the MITRE ATT&CK framework.
+Ready-to-use Fleet queries for detecting adversary tactics, techniques, and procedures based on the MITRE ATT&CK framework.
 
 ## Why This Repo Exists
 
@@ -11,7 +11,7 @@ The [MITRE ATT&CK framework](https://attack.mitre.org/) catalogs real-world adve
 - **Measure coverage**: Assess how well your security tools detect different attack types
 - **Communicate risk**: Use a common language with stakeholders about threats
 
-This repository converts community-maintained osquery configurations into Fleet-compatible policies, making it easy to deploy comprehensive ATT&CK-based monitoring across your fleet.
+This repository converts community-maintained osquery configurations into Fleet-compatible queries, making it easy to deploy comprehensive ATT&CK-based monitoring across your fleet.
 
 ## What You Get
 
@@ -31,45 +31,31 @@ This repository converts community-maintained osquery configurations into Fleet-
 
 ## Quick Start
 
-Deploy all policies to your Fleet instance:
+Deploy all queries to your Fleet instance:
 
 ```bash
-fleetctl apply -f policies/mitre-attck-complete.yml
+fleetctl apply -f queries/mitre-attck-complete.yml
 ```
 
-Or deploy by platform compatibility:
+Or deploy by operating system:
 
 ```bash
-# All platforms (Windows + Linux + macOS)
-fleetctl apply -f policies/all/mitre-attck-cross-platform.yml
+# Linux queries (23 techniques)
+fleetctl apply -f queries/linux/mitre-attck-linux.yml
 
-# Unix-like systems (Linux + macOS)  
-fleetctl apply -f policies/nix/mitre-attck-unix-like.yml
+# macOS queries (18 techniques)  
+fleetctl apply -f queries/macos/mitre-attck-macos.yml
 
-# Windows-specific policies
-fleetctl apply -f policies/windows/mitre-attck-windows-only.yml
-
-# Linux-specific policies
-fleetctl apply -f policies/linux/mitre-attck-linux-only.yml
-
-# macOS-specific policies (future)
-fleetctl apply -f policies/macos/mitre-attck-macos-only.yml
-```
-
-Or deploy by folder for all queries in a category:
-
-```bash
-# Deploy all cross-platform queries by folder
-fleetctl apply -f policies/all/
-
-# Deploy all Windows queries by folder  
-fleetctl apply -f policies/windows/
+# Windows queries (36 techniques)
+fleetctl apply -f queries/windows/mitre-attck-windows.yml
 ```
 
 Or deploy specific technique files:
 
 ```bash
-fleetctl apply -f policies/windows/by-technique/T1059_command_and_scripting_interpreter.yml
+fleetctl apply -f queries/windows/by-technique/T1059_command_and_scripting_interpreter.yml
+fleetctl apply -f queries/linux/by-technique/T1053_cron_job_discovery.yml
+fleetctl apply -f queries/macos/by-technique/T1176_browser_extensions.yml
 ```
 
 ## What's Included
@@ -84,54 +70,33 @@ Each policy includes:
 ## Folder Structure
 
 ```
-policies/
+queries/
 ├── mitre-attck-complete.yml           # All queries in one file (backward compatibility)
-├── all/                               # Cross-platform queries (Windows + Linux + macOS)
+├── linux/                            # Linux-specific queries (23 techniques)
 │   ├── by-technique/                  # Individual technique files
-│   └── mitre-attck-cross-platform.yml # All cross-platform queries
-├── nix/                               # Unix-like queries (Linux + macOS)
-│   ├── by-technique/                  # Individual technique files  
-│   └── mitre-attck-unix-like.yml      # All Unix-like queries
-├── windows/                           # Windows-specific queries
+│   └── mitre-attck-linux.yml          # All Linux queries combined
+├── macos/                            # macOS-specific queries (18 techniques)
 │   ├── by-technique/                  # Individual technique files
-│   └── mitre-attck-windows-only.yml   # All Windows queries
-├── linux/                            # Linux-specific queries
-│   ├── by-technique/                  # Individual technique files
-│   └── mitre-attck-linux-only.yml     # All Linux queries
-└── macos/                            # macOS-specific queries (ready for future use)
+│   └── mitre-attck-macos.yml          # All macOS queries combined
+└── windows/                          # Windows-specific queries (36 techniques)
     ├── by-technique/                  # Individual technique files
-    └── mitre-attck-macos-only.yml     # All macOS queries
+    └── mitre-attck-windows.yml        # All Windows queries combined
 ```
 
-### Platform Categories
+### Platform-Specific Coverage
 
-- **all/**: Queries using universal osquery tables (processes, users, etc.) that work on all platforms
-- **nix/**: Queries using Unix-specific tables (mounts, chrome_extensions, etc.) for Linux and macOS
-- **linux/**: Queries using Linux-specific paths or features not available on macOS
-- **windows/**: Queries using Windows-specific tables (registry, powershell_events, etc.)
-- **macos/**: Ready for future macOS-specific queries
+- **linux/**: 23 ATT&CK techniques covering Linux-specific monitoring (file systems, processes, users, cron jobs, sudoers, kernel modules, etc.)
+- **macos/**: 18 ATT&CK techniques covering macOS-specific monitoring (processes, users, browser extensions, sudoers, setuid binaries, etc.)  
+- **windows/**: 36 ATT&CK techniques covering Windows-specific monitoring (registry, services, processes, scheduled tasks, prefetch files, etc.)
 
 ## Getting Started
 
 1. **Choose your deployment approach**:
-   - **Cross-platform**: Use `policies/all/` for queries that work on all operating systems
-   - **Unix-like**: Use `policies/nix/` for Linux and macOS environments  
-   - **Platform-specific**: Use `policies/windows/`, `policies/linux/`, or `policies/macos/`
-   - **Complete**: Use `policies/mitre-attck-complete.yml` for all platforms (backward compatibility)
+   - **By OS**: Use `queries/linux/`, `queries/macos/`, or `queries/windows/` for platform-specific monitoring
+   - **Complete**: Use `queries/mitre-attck-complete.yml` for all platforms 
    - **Individual techniques**: Use specific files from `*/by-technique/` folders
 2. **Test in staging** before deploying to production
-3. **Start with cross-platform queries** from `all/` for broad coverage
-4. **Add platform-specific queries** based on your environment
+3. **Start with your primary OS** (Linux, macOS, or Windows) for focused coverage
+4. **Add additional OS queries** based on your environment
 5. **Tune intervals** based on your environment's needs
 6. **Integrate with your SIEM** for alerting and analysis
-
-## Research-Based Organization
-
-This repository organizes queries based on comprehensive research of osquery table compatibility:
-
-- **Universal Tables**: Queries in `all/` use tables available on Windows, Linux, and macOS (processes, users, logged_in_users, etc.)
-- **Unix-Specific Tables**: Queries in `nix/` use POSIX tables (mounts, suid_bin, sudoers, chrome_extensions, etc.)
-- **Platform-Specific Features**: Platform folders contain queries using OS-specific tables or file paths
-- **Verified Compatibility**: All categorizations verified against official osquery documentation and specs
-
-Fleet makes it easy to deploy comprehensive ATT&CK-based monitoring without building queries from scratch.

@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Snapshot Prefetach File Directory - ATT&CK T1070.004
+  discard_data: false
+  interval: 28800
+  name: MITRE - Prefetch File Monitoring
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Attrib Execute, usaullay used to modify file attributes - ATT&CK T1070.001
+  discard_data: false
+  interval: 600
+  name: MITRE - File Attribute Modification
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%attrib%';
+---
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Vssadmin Execute, usaullay used to execute activity on Volume Shadow copy
+  discard_data: false
+  interval: 600
+  name: MITRE - Volume Shadow Copy
+  observer_can_run: false
+  platform: "windows"
+  query: select * from file WHERE directory = 'C:\Windows\Prefetch\' and filename like '%vssadmin%';

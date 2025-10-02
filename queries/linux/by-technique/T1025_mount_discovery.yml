@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: query
+spec:
+  automations_enabled: false
+  description: Check mount on the host - ATT&CK T1025,T1052
+  discard_data: false
+  interval: 600
+  name: MITRE - Mount Discovery
+  observer_can_run: false
+  platform: "linux"
+  query: SELECT device, device_alias, flags, path, type from mounts;
